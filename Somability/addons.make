@@ -1,0 +1,7 @@
+ofxGui
+ofxOpenCv
+ofxOsc
+ofxXmlSettings
+ofxBox2d
+ofxOpenNI
+ofxStateMachine
