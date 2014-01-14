@@ -5,36 +5,36 @@ void testApp::setup() {
     
     ofSetLogLevel(OF_LOG_VERBOSE);
     
-    openNIDevice.setup();
-    openNIDevice.addImageGenerator();
-    openNIDevice.addDepthGenerator();
-    openNIDevice.setRegister(true);
-    openNIDevice.setMirror(true);
-    openNIDevice.addUserGenerator();
-    openNIDevice.setMaxNumUsers(2);
-    openNIDevice.start();
+    // setup shared data
+	stateMachine.getSharedData().counter = 0;
+	stateMachine.getSharedData().lastUpdate = ofGetElapsedTimeMillis();
+	stateMachine.getSharedData().font.loadFont("verdana.ttf", 24);
     
+    //openni into state machine now
+    stateMachine.getSharedData().openNIDevice.setup();
+    stateMachine.getSharedData().openNIDevice.addImageGenerator();
+    stateMachine.getSharedData().openNIDevice.addDepthGenerator();
+    stateMachine.getSharedData().openNIDevice.setRegister(true);
+    stateMachine.getSharedData().openNIDevice.setMirror(true);
+    stateMachine.getSharedData().openNIDevice.addUserGenerator();
+    stateMachine.getSharedData().openNIDevice.setMaxNumUsers(2);
+    stateMachine.getSharedData().openNIDevice.start();
     // set properties for all user masks and point clouds
     //openNIDevice.setUseMaskPixelsAllUsers(true); // if you just want pixels, use this set to true
-    openNIDevice.setUseMaskTextureAllUsers(true); // this turns on mask pixels internally AND creates mask textures efficiently
-    openNIDevice.setUsePointCloudsAllUsers(true);
-    openNIDevice.setPointCloudDrawSizeAllUsers(2); // size of each 'point' in the point cloud
-    openNIDevice.setPointCloudResolutionAllUsers(2); // resolution of the mesh created for the point cloud eg., this will use every second depth pixel
-    
-    // you can alternatively create a 'base' user class
-    //    ofxOpenNIUser user;
-    //    user.setUseMaskTexture(true);
-    //    user.setUsePointCloud(true);
-    //    user.setPointCloudDrawSize(2);
-    //    user.setPointCloudResolution(2);
-    //    openNIDevice.setBaseUserClass(user);
-    
-    verdana.loadFont(ofToDataPath("verdana.ttf"), 24);
+    stateMachine.getSharedData().openNIDevice.setUseMaskTextureAllUsers(true); // this turns on mask pixels internally AND creates mask textures efficiently
+    stateMachine.getSharedData().openNIDevice.setUsePointCloudsAllUsers(true);
+    stateMachine.getSharedData().openNIDevice.setPointCloudDrawSizeAllUsers(2); // size of each 'point' in the point cloud
+    stateMachine.getSharedData().openNIDevice.setPointCloudResolutionAllUsers(2); // resolution of the mesh created for the point cloud eg., this will use every second depth pixel
+	
+	// initialise state machine
+	stateMachine.addState<RedState>();
+	stateMachine.addState<GreenState>();
+	stateMachine.changeState("green");
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-    openNIDevice.update();
+    stateMachine.getSharedData().openNIDevice.update();
 }
 
 //--------------------------------------------------------------
@@ -43,7 +43,7 @@ void testApp::draw(){
     
     ofPushMatrix();
     // draw debug (ie., image, depth, skeleton)
-    openNIDevice.drawDebug();
+    stateMachine.getSharedData().openNIDevice.drawDebug();
     ofPopMatrix();
     
     ofPushMatrix();
@@ -51,13 +51,13 @@ void testApp::draw(){
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     
     // get number of current users
-    int numUsers = openNIDevice.getNumTrackedUsers();
+    int numUsers = stateMachine.getSharedData().openNIDevice.getNumTrackedUsers();
     
     // iterate through users
     for (int i = 0; i < numUsers; i++){
         
         // get a reference to this user
-        ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
+        ofxOpenNIUser & user = stateMachine.getSharedData().openNIDevice.getTrackedUser(i);
         
         // draw the mask texture for this user
         user.drawMask();
@@ -94,20 +94,14 @@ void testApp::draw(){
     
     // draw some info regarding frame counts etc
 	ofSetColor(0, 255, 0);
-	string msg = " MILLIS: " + ofToString(ofGetElapsedTimeMillis()) + " FPS: " + ofToString(ofGetFrameRate()) + " Device FPS: " + ofToString(openNIDevice.getFrameRate());
+	string msg = " MILLIS: " + ofToString(ofGetElapsedTimeMillis()) + " FPS: " + ofToString(ofGetFrameRate()) + " Device FPS: " + ofToString(stateMachine.getSharedData().openNIDevice.getFrameRate());
     
-	verdana.drawString(msg, 20, openNIDevice.getNumDevices() * 480 - 20);
-}
-
-//--------------------------------------------------------------
-void testApp::userEvent(ofxOpenNIUserEvent & event){
-    // show user event messages in the console
-    ofLogNotice() << getUserStatusAsString(event.userStatus) << "for user" << event.id << "from device" << event.deviceID;
+	stateMachine.getSharedData().font.drawString(msg, 20, stateMachine.getSharedData().openNIDevice.getNumDevices() * 480 - 20);
 }
 
 //--------------------------------------------------------------
 void testApp::exit(){
-    openNIDevice.stop();
+    stateMachine.getSharedData().openNIDevice.stop();
 }
 
 //--------------------------------------------------------------

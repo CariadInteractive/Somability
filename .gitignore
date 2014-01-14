@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+# Specific files for openNI data files that are too big
+Somability/bin/data/openni/
+Somability/bin/SomabilityDebug.app
+Somability/bin/SomabilityRelease.app

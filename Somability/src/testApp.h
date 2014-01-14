@@ -2,7 +2,10 @@
 
 #include "ofMain.h"
 
-#include "ofxOpenNI.h"
+#include "ofxStateMachine.h"
+#include "SharedData.h"
+#include "RedState.h"
+#include "GreenState.h"
 
 class testApp : public ofBaseApp{
 
@@ -22,11 +25,7 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    //from openNI example
-    void userEvent(ofxOpenNIUserEvent & event);
-    
-	ofxOpenNI openNIDevice;
-    
-    ofTrueTypeFont verdana;
+private:
+    itg::ofxStateMachine<SharedData> stateMachine;
 		
 };
