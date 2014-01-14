@@ -27,9 +27,12 @@ void testApp::setup() {
     stateMachine.getSharedData().openNIDevice.setPointCloudResolutionAllUsers(2); // resolution of the mesh created for the point cloud eg., this will use every second depth pixel
 	
 	// initialise state machine
-	stateMachine.addState<RedState>();
-	stateMachine.addState<GreenState>();
-	stateMachine.changeState("green");
+	stateMachine.addState<ChoiceState>();
+	stateMachine.addState<RhythmState>();
+	stateMachine.addState<StillnessState>();
+	stateMachine.addState<TogethernessState>();
+    stateMachine.addState<CollectingState>();
+	stateMachine.changeState("choice");
 }
 
 //--------------------------------------------------------------
@@ -37,8 +40,7 @@ void testApp::update(){
     stateMachine.getSharedData().openNIDevice.update();
 }
 
-//--------------------------------------------------------------
-void testApp::draw(){
+void testApp::drawKinectDebug(){
 	ofSetColor(255, 255, 255);
     
     ofPushMatrix();
@@ -97,6 +99,10 @@ void testApp::draw(){
 	string msg = " MILLIS: " + ofToString(ofGetElapsedTimeMillis()) + " FPS: " + ofToString(ofGetFrameRate()) + " Device FPS: " + ofToString(stateMachine.getSharedData().openNIDevice.getFrameRate());
     
 	stateMachine.getSharedData().font.drawString(msg, 20, stateMachine.getSharedData().openNIDevice.getNumDevices() * 480 - 20);
+}
+
+//--------------------------------------------------------------
+void testApp::draw(){
 }
 
 //--------------------------------------------------------------

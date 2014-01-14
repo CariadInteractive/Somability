@@ -56,8 +56,11 @@
 		5D59566118856960007A0F44 /* libXnVFeatures_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5956531885695F007A0F44 /* libXnVFeatures_1_5_2.dylib */; };
 		5D59566218856960007A0F44 /* libXnVHandGenerator_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5956541885695F007A0F44 /* libXnVHandGenerator_1_5_2.dylib */; };
 		5D59566318856960007A0F44 /* libXnVNite_1_5_2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5956551885695F007A0F44 /* libXnVNite_1_5_2.dylib */; };
-		5D59566B18856CEB007A0F44 /* GreenState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D59566618856CEB007A0F44 /* GreenState.cpp */; };
-		5D59566C18856CEB007A0F44 /* RedState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D59566818856CEB007A0F44 /* RedState.cpp */; };
+		5DE0BFAC18858BAA00FD1205 /* CollectingState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0BFAA18858BAA00FD1205 /* CollectingState.cpp */; };
+		5DE0BFB518858ECA00FD1205 /* ChoiceState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0BFAD18858ECA00FD1205 /* ChoiceState.cpp */; };
+		5DE0BFB618858ECA00FD1205 /* RhythmState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0BFAF18858ECA00FD1205 /* RhythmState.cpp */; };
+		5DE0BFB718858ECA00FD1205 /* StillnessState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0BFB118858ECA00FD1205 /* StillnessState.cpp */; };
+		5DE0BFB818858ECA00FD1205 /* TogethernessState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0BFB318858ECA00FD1205 /* TogethernessState.cpp */; };
 		62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
 		63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */; };
@@ -387,12 +390,18 @@
 		5D5956531885695F007A0F44 /* libXnVFeatures_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libXnVFeatures_1_5_2.dylib; sourceTree = "<group>"; };
 		5D5956541885695F007A0F44 /* libXnVHandGenerator_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libXnVHandGenerator_1_5_2.dylib; sourceTree = "<group>"; };
 		5D5956551885695F007A0F44 /* libXnVNite_1_5_2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libXnVNite_1_5_2.dylib; sourceTree = "<group>"; };
-		5D59566618856CEB007A0F44 /* GreenState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GreenState.cpp; sourceTree = "<group>"; };
-		5D59566718856CEB007A0F44 /* GreenState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenState.h; sourceTree = "<group>"; };
-		5D59566818856CEB007A0F44 /* RedState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RedState.cpp; sourceTree = "<group>"; };
-		5D59566918856CEB007A0F44 /* RedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedState.h; sourceTree = "<group>"; };
 		5D59566A18856CEB007A0F44 /* SharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedData.h; sourceTree = "<group>"; };
 		5D966EA1AA66E2D55D047733 /* blobtrack.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = blobtrack.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/legacy/blobtrack.hpp; sourceTree = SOURCE_ROOT; };
+		5DE0BFAA18858BAA00FD1205 /* CollectingState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollectingState.cpp; sourceTree = "<group>"; };
+		5DE0BFAB18858BAA00FD1205 /* CollectingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectingState.h; sourceTree = "<group>"; };
+		5DE0BFAD18858ECA00FD1205 /* ChoiceState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChoiceState.cpp; sourceTree = "<group>"; };
+		5DE0BFAE18858ECA00FD1205 /* ChoiceState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoiceState.h; sourceTree = "<group>"; };
+		5DE0BFAF18858ECA00FD1205 /* RhythmState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RhythmState.cpp; sourceTree = "<group>"; };
+		5DE0BFB018858ECA00FD1205 /* RhythmState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RhythmState.h; sourceTree = "<group>"; };
+		5DE0BFB118858ECA00FD1205 /* StillnessState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StillnessState.cpp; sourceTree = "<group>"; };
+		5DE0BFB218858ECA00FD1205 /* StillnessState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StillnessState.h; sourceTree = "<group>"; };
+		5DE0BFB318858ECA00FD1205 /* TogethernessState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TogethernessState.cpp; sourceTree = "<group>"; };
+		5DE0BFB418858ECA00FD1205 /* TogethernessState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TogethernessState.h; sourceTree = "<group>"; };
 		60179A75A6C5F9A54DA3A64C /* streams.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = streams.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/legacy/streams.hpp; sourceTree = SOURCE_ROOT; };
 		603F2267D449084A4187A049 /* ofxCvBlob.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCvBlob.h; path = ../../../addons/ofxOpenCv/src/ofxCvBlob.h; sourceTree = SOURCE_ROOT; };
 		61084035F9BAD2E934415139 /* b2DynamicTree.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2DynamicTree.h; path = ../../../addons/ofxBox2d/libs/Box2D/Collision/b2DynamicTree.h; sourceTree = SOURCE_ROOT; };
@@ -1127,10 +1136,16 @@
 		5D59566518856CEB007A0F44 /* States */ = {
 			isa = PBXGroup;
 			children = (
-				5D59566618856CEB007A0F44 /* GreenState.cpp */,
-				5D59566718856CEB007A0F44 /* GreenState.h */,
-				5D59566818856CEB007A0F44 /* RedState.cpp */,
-				5D59566918856CEB007A0F44 /* RedState.h */,
+				5DE0BFAD18858ECA00FD1205 /* ChoiceState.cpp */,
+				5DE0BFAE18858ECA00FD1205 /* ChoiceState.h */,
+				5DE0BFAF18858ECA00FD1205 /* RhythmState.cpp */,
+				5DE0BFB018858ECA00FD1205 /* RhythmState.h */,
+				5DE0BFB118858ECA00FD1205 /* StillnessState.cpp */,
+				5DE0BFB218858ECA00FD1205 /* StillnessState.h */,
+				5DE0BFB318858ECA00FD1205 /* TogethernessState.cpp */,
+				5DE0BFB418858ECA00FD1205 /* TogethernessState.h */,
+				5DE0BFAA18858BAA00FD1205 /* CollectingState.cpp */,
+				5DE0BFAB18858BAA00FD1205 /* CollectingState.h */,
 				5D59566A18856CEB007A0F44 /* SharedData.h */,
 			);
 			path = States;
@@ -1764,9 +1779,11 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
+				5DE0BFB818858ECA00FD1205 /* TogethernessState.cpp in Sources */,
 				856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */,
 				5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */,
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,
+				5DE0BFB618858ECA00FD1205 /* RhythmState.cpp in Sources */,
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,
@@ -1782,11 +1799,13 @@
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
+				5DE0BFB518858ECA00FD1205 /* ChoiceState.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
+				5DE0BFAC18858BAA00FD1205 /* CollectingState.cpp in Sources */,
 				A29D8C96AE042ECEAA1BD4F3 /* NetworkingUtilsWin.cpp in Sources */,
 				28090DEB5109115003E8F1C5 /* UdpSocketWin.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
@@ -1812,11 +1831,9 @@
 				A2E3224BF9B63DAA802A0F18 /* b2Distance.cpp in Sources */,
 				71C677669B75120425DE19D4 /* b2DynamicTree.cpp in Sources */,
 				19894C344A6861A26A61D2C0 /* b2TimeOfImpact.cpp in Sources */,
-				5D59566C18856CEB007A0F44 /* RedState.cpp in Sources */,
 				453D704CD216672147B2EEC2 /* b2ChainShape.cpp in Sources */,
 				DA846513DA696B1E8921BBC3 /* b2CircleShape.cpp in Sources */,
 				6DEA36329DE746459C62983F /* b2EdgeShape.cpp in Sources */,
-				5D59566B18856CEB007A0F44 /* GreenState.cpp in Sources */,
 				981EA7C2357295AE8501F4C6 /* b2PolygonShape.cpp in Sources */,
 				BB885F5F39C8DA070D80EF02 /* b2BlockAllocator.cpp in Sources */,
 				89F31F234274A62F3501E2EE /* b2Draw.cpp in Sources */,
@@ -1840,6 +1857,7 @@
 				7E1AAAB7A2F92465251AE49E /* b2PolygonAndCircleContact.cpp in Sources */,
 				41DDB078572B368F685E19F8 /* b2PolygonContact.cpp in Sources */,
 				14F3FB468FED85DD86CC9BCF /* b2DistanceJoint.cpp in Sources */,
+				5DE0BFB718858ECA00FD1205 /* StillnessState.cpp in Sources */,
 				03AC305C546FEDB7C2A7E1A8 /* b2FrictionJoint.cpp in Sources */,
 				2A5D09413FD64EB3AF88EF02 /* b2GearJoint.cpp in Sources */,
 				14D76FD1B7F190398D120FA4 /* b2Joint.cpp in Sources */,

@@ -4,8 +4,11 @@
 
 #include "ofxStateMachine.h"
 #include "SharedData.h"
-#include "RedState.h"
-#include "GreenState.h"
+#include "ChoiceState.h"
+#include "RhythmState.h"
+#include "StillnessState.h"
+#include "TogethernessState.h"
+#include "CollectingState.h"
 
 class testApp : public ofBaseApp{
 
@@ -24,6 +27,8 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+    void drawKinectDebug(); //just draws more information about the Kinect
     
 private:
     itg::ofxStateMachine<SharedData> stateMachine;
