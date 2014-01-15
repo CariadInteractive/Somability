@@ -32,6 +32,10 @@
 #pragma once
 
 #include "ofxOpenNI.h"
+#include "ofxBox2d.h"
+
+//enums http://www.cplusplus.com/doc/tutorial/other_data_types/
+enum InteractionDisplayMode { MIRROR, SILHOUETTE, INVISIBLE};
 
 class SharedData
 {
@@ -40,4 +44,68 @@ public:
 	int lastUpdate;
 	ofxOpenNI openNIDevice;
     ofTrueTypeFont font;
+    ofxBox2d box2d; //	the box2d world
+    InteractionDisplayMode theDisplayMode;
+    
+public:
+    void drawCorrectDisplayMode(){
+        switch (theDisplayMode){
+            case MIRROR:
+                drawMirrorDisplayMode();
+                break;
+            case SILHOUETTE:
+                drawSilhouetteDisplayMode();
+                break;
+            case INVISIBLE:
+                drawInvisibleDisplayMode();
+                break;
+            default:
+                break;
+        }
+    }
+    
+    void drawMirrorDisplayMode(){
+        ofSetColor(ofColor::white);
+        openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
+        
+        // get number of current users
+        int numUsers = openNIDevice.getNumTrackedUsers();
+        
+        // iterate through users
+        for (int i = 0; i < numUsers; i++){
+            
+            // get a reference to this user
+            ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
+            
+            // draw the skeleton
+            user.drawSkeleton();
+        }
+        
+        ofDrawBitmapStringHighlight("Mirror Display Mode", 10, ofGetHeight()-10);
+    }
+
+    void drawSilhouetteDisplayMode(){
+        ofSetColor(ofColor::white);
+        openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
+        
+        // get number of current users
+        int numUsers = openNIDevice.getNumTrackedUsers();
+        
+        // iterate through users
+        for (int i = 0; i < numUsers; i++){
+            
+            // get a reference to this user
+            ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
+            
+            // draw the skeleton
+            user.drawSkeleton();
+        }
+        
+        ofDrawBitmapStringHighlight("Silhouette Display Mode", 10, ofGetHeight()-10);
+    }
+
+    void drawInvisibleDisplayMode(){
+        //nothing as yet... (-;
+        ofDrawBitmapStringHighlight("Invisible Display Mode", 10, ofGetHeight()-10);
+    }
 };

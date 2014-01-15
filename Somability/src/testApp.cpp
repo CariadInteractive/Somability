@@ -4,6 +4,8 @@
 void testApp::setup() {
     
     ofSetLogLevel(OF_LOG_VERBOSE);
+    ofSetFrameRate(30);
+    ofBackground(ofColor::white);
     
     // setup shared data
 	stateMachine.getSharedData().counter = 0;
@@ -25,6 +27,13 @@ void testApp::setup() {
     stateMachine.getSharedData().openNIDevice.setUsePointCloudsAllUsers(true);
     stateMachine.getSharedData().openNIDevice.setPointCloudDrawSizeAllUsers(2); // size of each 'point' in the point cloud
     stateMachine.getSharedData().openNIDevice.setPointCloudResolutionAllUsers(2); // resolution of the mesh created for the point cloud eg., this will use every second depth pixel
+    
+    //now do box2D
+	stateMachine.getSharedData().box2d.init();
+	stateMachine.getSharedData().box2d.setGravity(0, 10);
+	stateMachine.getSharedData().box2d.createBounds();
+	stateMachine.getSharedData().box2d.setFPS(30.0);
+	//stateMachine.getSharedData().box2d.registerGrabbing();
 	
 	// initialise state machine
 	stateMachine.addState<ChoiceState>();
@@ -33,6 +42,8 @@ void testApp::setup() {
 	stateMachine.addState<TogethernessState>();
     stateMachine.addState<CollectingState>();
 	stateMachine.changeState("choice");
+    
+    stateMachine.getSharedData().theDisplayMode = MIRROR; //default to mirror mode
 }
 
 //--------------------------------------------------------------
@@ -112,7 +123,22 @@ void testApp::exit(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-    
+    switch (key) {
+        case 'f':
+            ofToggleFullscreen();
+            break;
+        case '1':
+            stateMachine.getSharedData().theDisplayMode = MIRROR;
+            break;
+        case '2':
+            stateMachine.getSharedData().theDisplayMode = SILHOUETTE;
+            break;
+        case '3':
+            stateMachine.getSharedData().theDisplayMode = INVISIBLE;
+            break;
+        default:
+            break;
+    }
 }
 
 //--------------------------------------------------------------

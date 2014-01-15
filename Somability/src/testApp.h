@@ -28,8 +28,7 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    void drawKinectDebug(); //just draws more information about the Kinect
-    
+    void drawKinectDebug(); //just draws more information about the Kinect    
 private:
     itg::ofxStateMachine<SharedData> stateMachine;
 		

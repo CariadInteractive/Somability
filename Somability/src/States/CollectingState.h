@@ -39,6 +39,10 @@ class CollectingState : public itg::ofxState<SharedData>
 public:
 	void update();
 	void draw();
+    void keyPressed(int key);
 	void mousePressed(int x, int y, int button);
 	string getName();
+    
+    vector    <ofPtr<ofxBox2dCircle> >	circles;		  //	default box2d circles
+	vector	  <ofPtr<ofxBox2dRect> >	boxes;			  //	defalut box2d rects
 };

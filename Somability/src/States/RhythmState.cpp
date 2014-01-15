@@ -37,7 +37,9 @@ void RhythmState::update()
 
 void RhythmState::draw()
 {
-	ofSetColor(255, 0, 0);
+    getSharedData().drawCorrectDisplayMode();
+    
+    ofSetColor(255, 0, 0);
 	getSharedData().font.drawString("Rhythm", ofGetWidth() >> 1, ofGetHeight() >> 1);
 }
 

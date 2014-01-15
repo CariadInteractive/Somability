@@ -37,6 +37,7 @@ void TogethernessState::update()
 
 void TogethernessState::draw()
 {
+    getSharedData().drawCorrectDisplayMode();
 	ofSetColor(255, 0, 0);
 	getSharedData().font.drawString("Togetherness", ofGetWidth() >> 1, ofGetHeight() >> 1);
 }

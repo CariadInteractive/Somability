@@ -37,7 +37,8 @@ void StillnessState::update()
 
 void StillnessState::draw()
 {
-	ofSetColor(255, 0, 0);
+	getSharedData().drawCorrectDisplayMode();
+    ofSetColor(255, 0, 0);
 	getSharedData().font.drawString("Stillness", ofGetWidth() >> 1, ofGetHeight() >> 1);
 }
 
