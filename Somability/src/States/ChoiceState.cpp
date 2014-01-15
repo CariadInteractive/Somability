@@ -62,7 +62,7 @@ void ChoiceState::draw()
     getSharedData().font.drawString("Stillness", topRight.getCenter().x, topRight.getCenter().y);
     getSharedData().font.drawString("Togetherness", bottomLeft.getCenter().x, bottomLeft.getCenter().y);
     getSharedData().font.drawString("Collecting", bottomRight.getCenter().x, bottomRight.getCenter().y);
-	getSharedData().font.drawString("Click a Choice, click any time to return to this screen", ofGetWidth() >> 1, ofGetHeight() >> 1);
+	getSharedData().font.drawString("Click a Choice, click any time to return to this screen", 10.f, ofGetHeight()/2.f);
     ofPopStyle();
 }
 
