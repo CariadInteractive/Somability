@@ -33,6 +33,7 @@
 
 #include "ofxState.h"
 #include "SharedData.h"
+#include "Trail.h"
 
 class StillnessState : public itg::ofxState<SharedData>
 {
@@ -40,5 +41,8 @@ public:
 	void update();
 	void draw();
 	void mousePressed(int x, int y, int button);
+	void mouseMoved(int x, int y, int button);
 	string getName();
+	map<int,Trail> trails;
+	
 };

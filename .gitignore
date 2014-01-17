@@ -27,3 +27,7 @@ Thumbs.db
 Somability/bin/data/openni/
 Somability/bin/SomabilityDebug.app
 Somability/bin/SomabilityRelease.app
+
+# marek added this
+*.app
+*.xcuserdatad

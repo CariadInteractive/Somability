@@ -43,6 +43,30 @@ public:
 	void mousePressed(int x, int y, int button);
 	string getName();
     
-    vector    <ofPtr<ofxBox2dCircle> >	circles;		  //	default box2d circles
-	vector	  <ofPtr<ofxBox2dRect> >	boxes;			  //	defalut box2d rects
+    vector    <ofPtr<ofxBox2dBaseShape> >	shapes;		  //	default box2d circles
+	
+	enum ShapeID {
+		TRIANGLE,
+		SQUARE,
+		HEXAGON,
+		CIRCLE,
+		CROSS
+	};
+
+	class ShapeData {
+	public:
+		float birthday;
+		ShapeID type;
+		ShapeData(ShapeID type = TRIANGLE, float birthday = 0) {
+			this->birthday = birthday;
+			this->type = type;
+		}
+	};
+	
+	
+	void addShape(ShapeID name, ofVec2f pos);
+	
+		
+	map<ofxBox2dBaseShape*,ShapeData> data;
+	bool shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape);
 };

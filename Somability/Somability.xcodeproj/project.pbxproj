@@ -129,6 +129,7 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		EA392DBC188963EB00D0B388 /* Trail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA392DBA188963EB00D0B388 /* Trail.cpp */; };
 		F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */; };
 		F2FF2F9D6699B4B328CB6BE3 /* ofxBox2dBaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B2388BEE23F8A1DD0AADBC6 /* ofxBox2dBaseShape.cpp */; };
 		F32187D344F58022DFD48C0F /* b2ContactSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0470D1543962FEC83BB4973 /* b2ContactSolver.cpp */; };
@@ -604,6 +605,8 @@
 		E83DBE901C4B79B39C15DC46 /* b2Distance.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2Distance.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Collision/b2Distance.cpp; sourceTree = SOURCE_ROOT; };
 		E8AF1E9150AD818FA9D9195D /* version.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = version.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/version.hpp; sourceTree = SOURCE_ROOT; };
 		E90542C149C83316678AB011 /* cxmisc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cxmisc.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cxmisc.h; sourceTree = SOURCE_ROOT; };
+		EA392DBA188963EB00D0B388 /* Trail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trail.cpp; sourceTree = "<group>"; };
+		EA392DBB188963EB00D0B388 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trail.h; sourceTree = "<group>"; };
 		EAC7229CC8FEF0087C9482F1 /* b2PrismaticJoint.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2PrismaticJoint.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp; sourceTree = SOURCE_ROOT; };
 		ECC34C470C60F0A2AE2761B1 /* random.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = random.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/random.h; sourceTree = SOURCE_ROOT; };
 		ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxGuiGroup.cpp; path = ../../../addons/ofxGui/src/ofxGuiGroup.cpp; sourceTree = SOURCE_ROOT; };
@@ -1142,6 +1145,8 @@
 				5DE0BFB018858ECA00FD1205 /* RhythmState.h */,
 				5DE0BFB118858ECA00FD1205 /* StillnessState.cpp */,
 				5DE0BFB218858ECA00FD1205 /* StillnessState.h */,
+				EA392DBA188963EB00D0B388 /* Trail.cpp */,
+				EA392DBB188963EB00D0B388 /* Trail.h */,
 				5DE0BFB318858ECA00FD1205 /* TogethernessState.cpp */,
 				5DE0BFB418858ECA00FD1205 /* TogethernessState.h */,
 				5DE0BFAA18858BAA00FD1205 /* CollectingState.cpp */,
@@ -1832,6 +1837,7 @@
 				71C677669B75120425DE19D4 /* b2DynamicTree.cpp in Sources */,
 				19894C344A6861A26A61D2C0 /* b2TimeOfImpact.cpp in Sources */,
 				453D704CD216672147B2EEC2 /* b2ChainShape.cpp in Sources */,
+				EA392DBC188963EB00D0B388 /* Trail.cpp in Sources */,
 				DA846513DA696B1E8921BBC3 /* b2CircleShape.cpp in Sources */,
 				6DEA36329DE746459C62983F /* b2EdgeShape.cpp in Sources */,
 				981EA7C2357295AE8501F4C6 /* b2PolygonShape.cpp in Sources */,
@@ -2138,7 +2144,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
-					/Users/joel/Documents/Projects/cariad/somability/oF/of_v0.8.0_osx_release/apps/Somability/Somability/bin/data/openni/lib,
+					bin/data/openni/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				SDKROOT = macosx10.8;
@@ -2225,7 +2231,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
-					/Users/joel/Documents/Projects/cariad/somability/oF/of_v0.8.0_osx_release/apps/Somability/Somability/bin/data/openni/lib,
+					bin/data/openni/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.8;

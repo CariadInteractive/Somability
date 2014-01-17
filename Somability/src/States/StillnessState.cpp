@@ -33,13 +33,23 @@
 
 void StillnessState::update()
 {
+
+	trails[0].update(ofVec2f(ofGetMouseX(), ofGetMouseY()));
 }
 
 void StillnessState::draw()
 {
+	
 	getSharedData().drawCorrectDisplayMode();
+	glLineWidth(25);
     ofSetColor(255, 0, 0);
 	getSharedData().font.drawString("Stillness", ofGetWidth() >> 1, ofGetHeight() >> 1);
+	map<int,Trail>::iterator it = trails.begin();
+	while(it!=trails.end()) {
+		(*it).second.draw();
+		it++;
+	}
+	glLineWidth(1);
 }
 
 string StillnessState::getName()
@@ -50,4 +60,9 @@ string StillnessState::getName()
 void StillnessState::mousePressed(int x, int y, int button)
 {
 	changeState("choice");
+}
+
+
+void StillnessState::mouseMoved(int x, int y, int button) {
+	
 }

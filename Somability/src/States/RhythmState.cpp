@@ -37,10 +37,27 @@ void RhythmState::update()
 
 void RhythmState::draw()
 {
-    getSharedData().drawCorrectDisplayMode();
+   // getSharedData().drawCorrectDisplayMode();
     
-    ofSetColor(255, 0, 0);
-	getSharedData().font.drawString("Rhythm", ofGetWidth() >> 1, ofGetHeight() >> 1);
+   // ofSetColor(255, 0, 0);
+//	getSharedData().font.drawString("Rhythm", ofGetWidth() >> 1, ofGetHeight() >> 1);
+	
+	
+	// get number of current users
+    int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
+    
+    // iterate through users
+    for (int i = 0; i < numUsers; i++){
+        
+        // get a reference to this user
+        ofxOpenNIUser & user = getSharedData().openNIDevice.getTrackedUser(i);
+        
+        // draw the mask texture for this user
+        user.drawMask();
+        
+		
+		
+	}
 }
 
 string RhythmState::getName()
@@ -52,3 +69,4 @@ void RhythmState::mousePressed(int x, int y, int button)
 {
 	changeState("choice");
 }
+

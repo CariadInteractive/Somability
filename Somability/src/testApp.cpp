@@ -5,7 +5,7 @@ void testApp::setup() {
     
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetFrameRate(30);
-    ofBackground(ofColor::white);
+    ofBackground(ofColor::black);
     
     // setup shared data
 	stateMachine.getSharedData().counter = 0;
@@ -58,7 +58,8 @@ void testApp::drawKinectDebug(){
     // draw debug (ie., image, depth, skeleton)
     stateMachine.getSharedData().openNIDevice.drawDebug();
     ofPopMatrix();
-    
+	
+   
     ofPushMatrix();
     // use a blend mode so we can see 'through' the mask(s)
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
@@ -110,10 +111,12 @@ void testApp::drawKinectDebug(){
 	string msg = " MILLIS: " + ofToString(ofGetElapsedTimeMillis()) + " FPS: " + ofToString(ofGetFrameRate()) + " Device FPS: " + ofToString(stateMachine.getSharedData().openNIDevice.getFrameRate());
     
 	stateMachine.getSharedData().font.drawString(msg, 20, stateMachine.getSharedData().openNIDevice.getNumDevices() * 480 - 20);
+
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
+//	drawKinectDebug();
 }
 
 //--------------------------------------------------------------
