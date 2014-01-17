@@ -33,14 +33,34 @@
 
 void StillnessState::update()
 {
-
-	trails[0].update(ofVec2f(ofGetMouseX(), ofGetMouseY()));
+	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
+	for(int i =0 ; i < numUsers; i++) {
+		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
+		int numJoints = user.getNumJoints();
+		int id = user.getXnID();
+		for(int j = 0; j < JOINT_COUNT; j++) {
+			int myId = id * 100 + j;
+			trails[myId].update(user.getJoint((Joint)j).getProjectivePosition());
+		}
+	}
+	//trails[0].update(ofVec2f(ofGetMouseX(), ofGetMouseY()));
 }
 
 void StillnessState::draw()
 {
+	ofSetColor(255);
+	//getSharedData().openNIDevice.drawDepth(0, 0, ofGetWidth(), ofGetHeight());
+	ofSetColor(0);
+	glPushMatrix();
 	
-	getSharedData().drawCorrectDisplayMode();
+	
+	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
+			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
+			 1);
+	
+			 
+	getSharedData().openNIDevice.drawSkeletons();
+//	getSharedData().drawCorrectDisplayMode();
 	glLineWidth(25);
     ofSetColor(255, 0, 0);
 	getSharedData().font.drawString("Stillness", ofGetWidth() >> 1, ofGetHeight() >> 1);
@@ -49,8 +69,17 @@ void StillnessState::draw()
 		(*it).second.draw();
 		it++;
 	}
+	glPopMatrix();
 	glLineWidth(1);
 }
+
+void StillnessState::userEvent(ofxOpenNIUserEvent & event) {
+	if(event.userStatus==USER_SKELETON_LOST || event.userStatus==USER_TRACKING_STOPPED) {
+		// delete user trails
+
+	}
+}
+
 
 string StillnessState::getName()
 {
@@ -65,4 +94,11 @@ void StillnessState::mousePressed(int x, int y, int button)
 
 void StillnessState::mouseMoved(int x, int y, int button) {
 	
+}
+
+void StillnessState::stateEnter() {
+	ofRemoveListener(getSharedData().openNIDevice.userEvent, this, &StillnessState::userEvent);
+}
+void StillnessState::stateExit() {
+	ofAddListener(getSharedData().openNIDevice.userEvent, this, &StillnessState::userEvent);
 }

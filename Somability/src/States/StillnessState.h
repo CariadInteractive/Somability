@@ -45,4 +45,10 @@ public:
 	string getName();
 	map<int,Trail> trails;
 	
+	void stateEnter();
+	void stateExit();
+	
+	
+	void userEvent(ofxOpenNIUserEvent & event);
+	
 };

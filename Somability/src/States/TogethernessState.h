@@ -34,11 +34,49 @@
 #include "ofxState.h"
 #include "SharedData.h"
 
-class TogethernessState : public itg::ofxState<SharedData>
+class TogethernessState : public itg::ofxState<SharedData>, public ofBaseSoundInput
 {
 public:
+	
+	
+	void setup();
 	void update();
 	void draw();
 	void mousePressed(int x, int y, int button);
 	string getName();
+	void stateEnter();
+	void stateExit();
+	void shoot();
+	void tryToFire();
+	ofSoundPlayer boing;
+	
+	ofSoundStream soundStream;
+	void audioIn(float *samples, int length, int numChannels);
+	float volume;
+	float volumeThreshold;
+	int audioFramesSinceLastFired;
+	int MIN_FRAMES_BETWEEN_FIRES;
+	bool mustFire;
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////////
+	// BOX2D stuff
+	
+	vector    <ofPtr<ofxBox2dBaseShape> >	shapes;		  //	default box2d circles
+	
+	
+	class ShapeData {
+	public:
+		float birthday;
+		
+		ShapeData(float birthday = 0) {
+			this->birthday = birthday;
+		}
+	};
+	
+	map<ofxBox2dBaseShape*,ShapeData> data;
+	bool shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape);
+	//
+	///////////////////////////////////////////////////////////////////////////////////////
+	float MAX_SHAPE_AGE;
 };

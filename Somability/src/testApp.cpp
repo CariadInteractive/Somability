@@ -16,7 +16,7 @@ void testApp::setup() {
     stateMachine.getSharedData().openNIDevice.setup();
     stateMachine.getSharedData().openNIDevice.addImageGenerator();
     stateMachine.getSharedData().openNIDevice.addDepthGenerator();
-    stateMachine.getSharedData().openNIDevice.setRegister(true);
+    stateMachine.getSharedData().openNIDevice.setRegister(false);
     stateMachine.getSharedData().openNIDevice.setMirror(true);
     stateMachine.getSharedData().openNIDevice.addUserGenerator();
     stateMachine.getSharedData().openNIDevice.setMaxNumUsers(2);

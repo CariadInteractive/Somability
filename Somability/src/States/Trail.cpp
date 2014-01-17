@@ -7,10 +7,33 @@
 #include "Trail.h"
 
 int Trail::MAX_LENGTH = 90;
-
+int Trail::colourPos = 0;
 Trail::Trail() {
-	colour.set(1, 0, 0);
+	colourPos++;
+	colourPos %= 6;
+	switch(colourPos) {
+		case 0:
+			colour.set(0, 1, 0);
+			break;
+		case 1:
+			colour.set(1, 0, 0);
+			break;
+		case 2:
+			colour.set(1, 0, 1);
+			break;
+		case 3:
+			colour.set(1, 1, 0);
+			break;
+		case 4:
+			colour.set(0, 1, 1);
+			break;
+		case 5:
+			colour.set(0, 0, 1);
+			break;
+	}
 }
+
+
 void Trail::smoothTrail() {
 	deque<ofVec2f>::reverse_iterator it = points.rbegin();
 	

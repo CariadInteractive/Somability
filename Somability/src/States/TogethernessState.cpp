@@ -30,16 +30,85 @@
  *
  */
 #include "TogethernessState.h"
+void TogethernessState::setup() {
+	soundStream.setup(0, 2, 44100, 512, 1);
+	soundStream.setInput(this);
+	soundStream.stop();
+	volumeThreshold = 0.2;
+	audioFramesSinceLastFired = 0;
+	MIN_FRAMES_BETWEEN_FIRES = 0.3 * 44100; // 0.3 seconds at 44.1kHz
+	boing.loadSound("boing.wav");
+	mustFire = false;
+	MAX_SHAPE_AGE = 20;
+}
+
+void TogethernessState::shoot() {
+	ofxBox2dCircle *c = new ofxBox2dCircle();
+	
+	float r = ofRandom(20, 42);
+	c->setPhysics(3.0, 0.53, 0.1);
+	c->setup(getSharedData().box2d.getWorld(), ofGetMouseX(), ofGetMouseY(), r);
+	c->setVelocity(5,0 );
+	shapes.push_back(ofPtr<ofxBox2dBaseShape>(c));
+	data[c] = ShapeData(ofGetElapsedTimef());
+
+}
+
+
+bool TogethernessState::shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape) {
+	if(data.find(shape)!=data.end()) {
+		return (currTime - data[shape].birthday)>MAX_SHAPE_AGE;
+	}
+	return false;
+}
 
 void TogethernessState::update()
 {
+	if(mustFire) {
+		boing.play();
+		shoot();
+		
+		
+		mustFire = false;
+
+	}
+	
+	getSharedData().box2d.update();
+    
+    // remove shapes offscreen
+    //ofRemove(shapes, ofxBox2dBaseShape::shouldRemoveOffScreen);
+	float currTime = ofGetElapsedTimef();
+	for(int i =0 ; i < shapes.size(); i++) {
+		if(ofxBox2dBaseShape::shouldRemoveOffScreen(shapes[i]) || shapeIsTooOld(currTime, shapes[i].get())) {
+			data.erase(shapes[i].get());
+			shapes.erase(shapes.begin() + i);
+			i--;
+		}
+	}
+
+	
+	
+	
 }
 
 void TogethernessState::draw()
 {
-    getSharedData().drawCorrectDisplayMode();
+//    getSharedData().drawCorrectDisplayMode();
+	ofSetColor(255);
+	getSharedData().openNIDevice.drawDepth(0, 0, ofGetWidth(), ofGetHeight());
 	ofSetColor(255, 0, 0);
 	getSharedData().font.drawString("Togetherness", ofGetWidth() >> 1, ofGetHeight() >> 1);
+	
+	
+	ofFill();
+	ofSetColor(ofColor::red);
+	
+    for(int i=0; i<shapes.size(); i++) {
+		shapes[i].get()->draw();
+	}
+
+	
+
 }
 
 string TogethernessState::getName()
@@ -50,4 +119,33 @@ string TogethernessState::getName()
 void TogethernessState::mousePressed(int x, int y, int button)
 {
 	changeState("choice");
+}
+
+void TogethernessState::tryToFire() {
+	mustFire = true;
+}
+
+
+void TogethernessState::audioIn(float *samples, int length, int numChannels) {
+	for(int i =0 ; i < length; i++) {
+		float f = ABS(samples[i]);
+		if(volume<f) volume = f;
+		else volume *= 0.999;
+		if(volume>volumeThreshold) {
+			if(audioFramesSinceLastFired>MIN_FRAMES_BETWEEN_FIRES) {
+				tryToFire();
+				audioFramesSinceLastFired = 0;
+			}
+		}
+		
+		audioFramesSinceLastFired++;
+	}
+}
+
+void TogethernessState::stateEnter() {
+	soundStream.start();
+}
+void TogethernessState::stateExit() {
+
+	soundStream.stop();
 }

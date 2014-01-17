@@ -26,5 +26,6 @@ public:
 	ofFloatColor colour;
 	deque<ofVec2f> points;
 	static int MAX_LENGTH;
+	static int colourPos;
 	void smoothTrail();
 };
