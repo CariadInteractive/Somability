@@ -37,12 +37,13 @@
 class CollectingState : public itg::ofxState<SharedData>
 {
 public:
+	void setup();
 	void update();
 	void draw();
     void keyPressed(int key);
 	void mousePressed(int x, int y, int button);
 	string getName();
-    
+    void stateEnter();
     vector    <ofPtr<ofxBox2dBaseShape> >	shapes;		  //	default box2d circles
 	
 	enum ShapeID {
@@ -50,7 +51,8 @@ public:
 		SQUARE,
 		HEXAGON,
 		CIRCLE,
-		CROSS
+		NUM_SHAPES,
+		NO_SHAPE
 	};
 
 	class ShapeData {
@@ -69,4 +71,20 @@ public:
 		
 	map<ofxBox2dBaseShape*,ShapeData> data;
 	bool shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape);
+	void setColorForShape(ShapeID t);
+	
+	
+	vector<pair<ShapeID,ofRectangle> > triggers;
+
+	enum Hand {
+		LEFT_HAND,
+		RIGHT_HAND
+	};
+	
+	ShapeID handTouching[2];
+
+	
+	void handMoved(ofVec2f p, Hand hand);
+	void mouseMoved(int x, int y);
+	void drawFluffBall(ofVec2f p, float radius);
 };

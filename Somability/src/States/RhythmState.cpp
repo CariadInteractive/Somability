@@ -34,13 +34,15 @@
 void RhythmState::update()
 {
 }
-
+void RhythmState::stateEnter() {
+	ofSetWindowTitle(getName());
+}
 void RhythmState::draw()
 {
-   // getSharedData().drawCorrectDisplayMode();
+	getSharedData().drawCorrectDisplayMode();
     
-   // ofSetColor(255, 0, 0);
-//	getSharedData().font.drawString("Rhythm", ofGetWidth() >> 1, ofGetHeight() >> 1);
+    ofSetColor(255, 0, 0);
+	getSharedData().font.drawString(getName(), 5, 30);
 	
 	
 	// get number of current users
@@ -53,7 +55,7 @@ void RhythmState::draw()
         ofxOpenNIUser & user = getSharedData().openNIDevice.getTrackedUser(i);
         
         // draw the mask texture for this user
-        user.drawMask();
+       // user.drawMask();
         
 		
 		

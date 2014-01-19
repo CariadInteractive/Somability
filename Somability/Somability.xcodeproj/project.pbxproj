@@ -1139,19 +1139,19 @@
 		5D59566518856CEB007A0F44 /* States */ = {
 			isa = PBXGroup;
 			children = (
-				5DE0BFAD18858ECA00FD1205 /* ChoiceState.cpp */,
-				5DE0BFAE18858ECA00FD1205 /* ChoiceState.h */,
-				5DE0BFAF18858ECA00FD1205 /* RhythmState.cpp */,
-				5DE0BFB018858ECA00FD1205 /* RhythmState.h */,
 				5DE0BFB118858ECA00FD1205 /* StillnessState.cpp */,
 				5DE0BFB218858ECA00FD1205 /* StillnessState.h */,
 				EA392DBA188963EB00D0B388 /* Trail.cpp */,
 				EA392DBB188963EB00D0B388 /* Trail.h */,
+				5DE0BFAD18858ECA00FD1205 /* ChoiceState.cpp */,
+				5DE0BFAE18858ECA00FD1205 /* ChoiceState.h */,
 				5DE0BFB318858ECA00FD1205 /* TogethernessState.cpp */,
 				5DE0BFB418858ECA00FD1205 /* TogethernessState.h */,
 				5DE0BFAA18858BAA00FD1205 /* CollectingState.cpp */,
 				5DE0BFAB18858BAA00FD1205 /* CollectingState.h */,
 				5D59566A18856CEB007A0F44 /* SharedData.h */,
+				5DE0BFAF18858ECA00FD1205 /* RhythmState.cpp */,
+				5DE0BFB018858ECA00FD1205 /* RhythmState.h */,
 			);
 			path = States;
 			sourceTree = "<group>";

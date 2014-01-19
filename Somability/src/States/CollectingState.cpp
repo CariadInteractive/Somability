@@ -34,6 +34,25 @@
 #define MAX_SHAPE_AGE 20
 
 
+void CollectingState::setup() {
+	
+	handTouching[LEFT_HAND] = NO_SHAPE;
+	handTouching[RIGHT_HAND] = NO_SHAPE;
+	
+	// y position of the triggers, 2/9ths down the screen
+	float yy = getSharedData().openNIDevice.getHeight()*2.f/9.f;
+	
+	for(int i = 0; i < NUM_SHAPES; i++) {
+		
+		float xpos = ofMap(i, -1, NUM_SHAPES, 0, getSharedData().openNIDevice.getWidth());
+//		ofLine(xpos, 0, xpos, 480);
+		ofRectangle r;
+		float w = getSharedData().openNIDevice.getWidth()/7.f;
+		r.setFromCenter(xpos, yy, w, w);
+		triggers.push_back(make_pair((ShapeID)i, r));
+	}
+}
+
 
 bool CollectingState::shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape) {
 	if(data.find(shape)!=data.end()) {
@@ -44,8 +63,30 @@ bool CollectingState::shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape) {
 
 void CollectingState::update()
 {
+	
+	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
+	for(int i = 0; i < numUsers; i++) {
+	
+		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
+		ofxOpenNIJoint &j1 = user.getJoint(JOINT_LEFT_HAND);
+		ofxOpenNIJoint &j2 = user.getJoint(JOINT_RIGHT_HAND);
+		handMoved(j1.getProjectivePosition(), LEFT_HAND);
+		handMoved(j2.getProjectivePosition(), RIGHT_HAND);
+		
+	}
+	
+	
+	
+	
     getSharedData().box2d.update();
-    
+	if(ofGetFrameNum()%10==0) {
+		if(handTouching[LEFT_HAND]!=NO_SHAPE) {
+			addShape(handTouching[LEFT_HAND], ofVec2f(ofRandom(0, getSharedData().openNIDevice.getWidth()), 1));
+		}
+		if(handTouching[RIGHT_HAND]!=NO_SHAPE) {
+			addShape(handTouching[RIGHT_HAND], ofVec2f(ofRandom(0, getSharedData().openNIDevice.getWidth()), 1));
+		}
+	}
     // remove shapes offscreen
     //ofRemove(shapes, ofxBox2dBaseShape::shouldRemoveOffScreen);
 	float currTime = ofGetElapsedTimef();
@@ -59,28 +100,114 @@ void CollectingState::update()
 
 }
 
+void CollectingState::setColorForShape(ShapeID t) {
+	if(t==CIRCLE) {
+		ofSetColor(255, 0, 0);
+	} else if(t==HEXAGON) {
+		ofSetColor(0, 255, 0);
+	} else if(t==TRIANGLE) {
+		ofSetColor(255, 255, 0);
+	} else if(t==SQUARE) {
+		ofSetColor(0, 0, 255);
+	}
+}
+
+void _ofVertex(ofVec2f v) {
+	ofVertex(v.x, v.y);
+}
+
+void CollectingState::drawFluffBall(ofVec2f p, float radius) {
+	glPushMatrix();
+	glTranslatef(p.x, p.y, 0);
+	ofVec2f a(radius, 0);
+	int steps = 60;
+	float angle = 360.f/steps;
+	
+	
+	glBegin(GL_TRIANGLE_FAN);
+	glColor4f(1, 1, 1, 1);
+	glVertex2f(0,0);
+	for(int i = 0; i <= steps; i++) {
+	glColor4f(1, 1, 1, 0);
+		glVertex2f(a.x, a.y);
+		a.rotate(angle);
+	}
+	glEnd();
+	glPopMatrix();
+}
 void CollectingState::draw()
 {
     getSharedData().drawCorrectDisplayMode();
 	
+	
+	glPushMatrix();
+	
+	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
+			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
+			 1);
+
+
 	ofFill();
 	ofSetColor(ofColor::red);
-	
+	getSharedData().font.drawString(getName(), 5, 30);
+
     for(int i=0; i<shapes.size(); i++) {
 		ShapeID t = data[shapes[i].get()].type;
-		if(t==CIRCLE) {
-			ofSetColor(255, 0, 0);
-		} else if(t==HEXAGON) {
-			ofSetColor(0, 255, 0);
-		} else if(t==TRIANGLE) {
-			ofSetColor(0, 255,255);
-		} else if(t==SQUARE) {
-			ofSetColor(0, 0, 255);
-		}
-
+		setColorForShape(t);
 		shapes[i].get()->draw();
 	}
+	ofSetColor(255);
+	for(int i = 0; i < triggers.size(); i++) {
+		ofNoFill();
+		ofSetColor(255);
+		ShapeID shapeType = triggers[i].first;
+		
+		if(handTouching[LEFT_HAND]==shapeType || handTouching[RIGHT_HAND]==shapeType) {
+			drawFluffBall(triggers[i].second.getCenter(), triggers[i].second.getWidth()*0.9);
+		}
+		
+		ofFill();
+		setColorForShape(triggers[i].first);
+		switch(triggers[i].first) {
+			case CIRCLE:
+				ofCircle(triggers[i].second.getCenter(), triggers[i].second.width/2);
+				break;
+			case SQUARE:
+				ofRect(triggers[i].second);
+				break;
+			case TRIANGLE:
+			{
+				ofBeginShape();
+				_ofVertex(triggers[i].second.getBottomLeft());
+				_ofVertex(triggers[i].second.getBottomRight());
+				
+				ofVec2f v = (triggers[i].second.getBottomRight() + triggers[i].second.getBottomLeft())/2;
+				v.y -= triggers[i].second.height*sqrt(3)/2;
+				_ofVertex(v);
+				
+				ofEndShape();
+			}
+				break;
+			case HEXAGON:
+			{
+				glPushMatrix();
+				glTranslatef(triggers[i].second.getCenter().x, triggers[i].second.getCenter().y, 0);
+				ofBeginShape();
+				ofVec2f v(triggers[i].second.width/2, 0);
+				for(int i = 0; i < 6; i++) {
+					_ofVertex(v);
+					v.rotate(60);
+				}
+				ofEndShape();
+				
+				glPopMatrix();
+			}
+				break;
+		}
+	}
 	
+	
+	glPopMatrix();
 }
 
 string CollectingState::getName()
@@ -91,21 +218,52 @@ string CollectingState::getName()
 //--------------------------------------------------------------
 void CollectingState::keyPressed(int k) {
 
+	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+	ofVec2f x(getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight());
+	ofVec2f s(ofGetWidth(), ofGetHeight());
+	
+	m = m*x/s;
 	
 	if(k=='j') {
-		addShape(CIRCLE, ofVec2f(ofGetMouseX(), ofGetMouseY()));
+		addShape(CIRCLE, m);
 	} else if(k=='k') {
-		addShape(HEXAGON, ofVec2f(ofGetMouseX(), ofGetMouseY()));
+		addShape(HEXAGON, m);
 	} else if(k=='l') {
-		addShape(TRIANGLE, ofVec2f(ofGetMouseX(), ofGetMouseY()));
+		addShape(TRIANGLE, m);
 	} else if(k==';') {
-		addShape(SQUARE, ofVec2f(ofGetMouseX(), ofGetMouseY()));
-	//} else if(k=='\'') {
-	//	addShape(CROSS, ofVec2f(ofGetMouseX(), ofGetMouseY()));
+		addShape(SQUARE, m);
 	}
 	
 	
 }
+
+void CollectingState::mouseMoved(int x, int y) {
+	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+	ofVec2f k(getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight());
+	ofVec2f s(ofGetWidth(), ofGetHeight());
+	
+	m = m*k/s;
+	
+	handMoved(m, LEFT_HAND);
+
+}
+
+void CollectingState::handMoved(ofVec2f p, Hand hand) {
+	bool found = false;
+	for(int i = 0; i < triggers.size(); i++) {
+		if(triggers[i].second.inside(p.x, p.y)) {
+			handTouching[hand] = triggers[i].first;
+			found = true;
+		}
+	}
+	if(!found) handTouching[hand] = NO_SHAPE;
+}
+
+
+void CollectingState::stateEnter() {
+	ofSetWindowTitle(getName());
+}
+
 
 void CollectingState::mousePressed(int x, int y, int button)
 {
@@ -130,7 +288,7 @@ void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 		float h = w;
 		ofxBox2dRect *r = new ofxBox2dRect();
 		r->setPhysics(3.0, 0.53, 0.1);
-		r->setup(getSharedData().box2d.getWorld(), ofGetMouseX(), ofGetMouseY(), w, h);
+		r->setup(getSharedData().box2d.getWorld(), pos.x, pos.y, w, h);
 		shape = r;
 	} else if(type==TRIANGLE) {
 		float w = ofRandom(20, 42);
@@ -160,24 +318,6 @@ void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 		p->create(getSharedData().box2d.getWorld());
 		p->setPosition(pos.x, pos.y);
 		shape = p;
-	/*}  else if(type==CROSS) {
-
-		float h = ofRandom(20, 42);
-		float w = ofRandom(4, 15);
-		
-		
-		ofxBox2dPolygon *p = new ofxBox2dPolygon();
-		p->setPhysics(3.0, 0.53, 0.1);
-		
-		p->addTriangle(ofVec2f(-w/2,-h/2),ofVec2f(w/2,-h/2), ofVec2f(w/2,h/2));
-		p->addTriangle(ofVec2f(w/2,h/2), ofVec2f(-w/2,h/2),ofVec2f(w/2,-h/2));
-		
-		p->addTriangle(ofVec2f(-h/2,-w/2),ofVec2f(w/2,-w/2), ofVec2f(w/2,w/2));
-		p->addTriangle(ofVec2f(h/2,w/2), ofVec2f(-h/2,w/2),ofVec2f(h/2,-w/2));
-		
-		p->create(getSharedData().box2d.getWorld());
-		p->setPosition(pos.x, pos.y);
-		shape = p;*/
 	}
 
 	

@@ -36,7 +36,7 @@ Trail::Trail() {
 
 void Trail::smoothTrail() {
 	deque<ofVec2f>::reverse_iterator it = points.rbegin();
-	
+		
 	while(it!=points.rend()) {
 		ofVec2f &prev = (*it);
 		it++;
@@ -50,13 +50,17 @@ void Trail::smoothTrail() {
 void Trail::update(ofVec2f p) {
 	smoothTrail();
 	
-	
 	points.push_back(p);
 	while(points.size()>MAX_LENGTH) {
 		points.pop_front();
 	}
 	
 
+}
+void Trail::update2() {
+	if(ofRandomuf()<0.7) return;
+
+	points.pop_front();
 }
 
 void Trail::draw() {
@@ -66,19 +70,24 @@ void Trail::draw() {
 	int i =0 ;
 	ofSetColor(colour);
 	ofNoFill();
-	glBegin(GL_LINE_STRIP);
 
+	//glBegin(GL_LINE_STRIP);
+	mesh.clear();
 
 	while(it!=points.end()) {
-		float alpha = ofMap(i, numPoints, 0, 1, 0, true);
-		glColor4f(colour.r, colour.g, colour.b, alpha);
-		glVertex2f((*it).x,(*it).y);
+
+//		glColor4f(colour.r, colour.g, colour.b, alpha);
+//		glVertex2f((*it).x,(*it).y);
+		colour.a = ofMap(i, numPoints, 0, 1, 0, true);
+		mesh.addColor(colour);
+		mesh.addVertex((*it));
 		it++;
 		i++;
-		printf("Alpha %f\n", alpha);
 	}
 	
-	glEnd();
+	//glEnd();
+	mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+	mesh.draw();
 	
 	ofFill();
 }

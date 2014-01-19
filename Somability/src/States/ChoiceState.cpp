@@ -35,6 +35,9 @@ void ChoiceState::update()
 {
 }
 
+void ChoiceState::stateEnter() {
+	ofSetWindowTitle(getName());
+}
 void ChoiceState::draw()
 {
     ofPushStyle(); //be polite

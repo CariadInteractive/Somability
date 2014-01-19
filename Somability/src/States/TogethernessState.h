@@ -33,6 +33,7 @@
 
 #include "ofxState.h"
 #include "SharedData.h"
+#include "ofxOpenCv.h"
 
 class TogethernessState : public itg::ofxState<SharedData>, public ofBaseSoundInput
 {
@@ -52,13 +53,18 @@ public:
 	
 	ofSoundStream soundStream;
 	void audioIn(float *samples, int length, int numChannels);
+	void keyPressed(int k);
 	float volume;
-	float volumeThreshold;
 	int audioFramesSinceLastFired;
 	int MIN_FRAMES_BETWEEN_FIRES;
 	bool mustFire;
+		
+	ofxCvGrayscaleImage greyImg;
+	ofxCvContourFinder contours;
+	ofxBox2dEdge *person;
+	unsigned char *buff;
 	
-	
+	float shootingAngle;
 	///////////////////////////////////////////////////////////////////////////////////////
 	// BOX2D stuff
 	
@@ -79,4 +85,5 @@ public:
 	//
 	///////////////////////////////////////////////////////////////////////////////////////
 	float MAX_SHAPE_AGE;
+	int sensitivity;
 };

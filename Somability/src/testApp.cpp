@@ -16,12 +16,14 @@ void testApp::setup() {
     stateMachine.getSharedData().openNIDevice.setup();
     stateMachine.getSharedData().openNIDevice.addImageGenerator();
     stateMachine.getSharedData().openNIDevice.addDepthGenerator();
-    stateMachine.getSharedData().openNIDevice.setRegister(false);
+    stateMachine.getSharedData().openNIDevice.setRegister(true);
     stateMachine.getSharedData().openNIDevice.setMirror(true);
     stateMachine.getSharedData().openNIDevice.addUserGenerator();
     stateMachine.getSharedData().openNIDevice.setMaxNumUsers(2);
     stateMachine.getSharedData().openNIDevice.start();
     // set properties for all user masks and point clouds
+	stateMachine.getSharedData().openNIDevice.setMaskPixelFormatAllUsers(OF_PIXELS_MONO);
+
     //openNIDevice.setUseMaskPixelsAllUsers(true); // if you just want pixels, use this set to true
     stateMachine.getSharedData().openNIDevice.setUseMaskTextureAllUsers(true); // this turns on mask pixels internally AND creates mask textures efficiently
     stateMachine.getSharedData().openNIDevice.setUsePointCloudsAllUsers(true);
@@ -31,7 +33,7 @@ void testApp::setup() {
     //now do box2D
 	stateMachine.getSharedData().box2d.init();
 	stateMachine.getSharedData().box2d.setGravity(0, 10);
-	stateMachine.getSharedData().box2d.createBounds();
+	stateMachine.getSharedData().box2d.createBounds(0,0,640, 480);
 	stateMachine.getSharedData().box2d.setFPS(30.0);
 	//stateMachine.getSharedData().box2d.registerGrabbing();
 	
@@ -134,9 +136,11 @@ void testApp::keyPressed(int key){
             stateMachine.getSharedData().theDisplayMode = MIRROR;
             break;
         case '2':
+            stateMachine.getSharedData().theDisplayMode = MIRROR_SKELETON;
+		case '3':
             stateMachine.getSharedData().theDisplayMode = SILHOUETTE;
             break;
-        case '3':
+        case '4':
             stateMachine.getSharedData().theDisplayMode = INVISIBLE;
             break;
         default:

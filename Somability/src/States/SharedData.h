@@ -35,7 +35,7 @@
 #include "ofxBox2d.h"
 
 //enums http://www.cplusplus.com/doc/tutorial/other_data_types/
-enum InteractionDisplayMode { MIRROR, SILHOUETTE, INVISIBLE};
+enum InteractionDisplayMode { MIRROR, MIRROR_SKELETON, SILHOUETTE, INVISIBLE};
 
 class SharedData
 {
@@ -56,6 +56,10 @@ public:
             case SILHOUETTE:
                 drawSilhouetteDisplayMode();
                 break;
+				
+			case MIRROR_SKELETON:
+                drawMirrorSkeletonDisplayMode();
+                break;
             case INVISIBLE:
                 drawInvisibleDisplayMode();
                 break;
@@ -64,33 +68,52 @@ public:
         }
     }
     
+	
+	void drawMirrorSkeletonDisplayMode() {
+		ofSetColor(ofColor::white);
+        openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
+        
+		glPushMatrix();
+		glScalef((float)openNIDevice.getWidth()/ofGetWidth(), (float)openNIDevice.getHeight(), 1);
+		 // iterate through users
+		int numUsers = openNIDevice.getNumTrackedUsers();
+		 for (int i = 0; i < numUsers; i++){
+		 
+			 // get a reference to this user
+			 ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
+			 
+			 // draw the skeleton
+			 user.drawSkeleton();
+		 }
+		glPopMatrix();
+		 ofDrawBitmapStringHighlight("Mirror + Skeletons Display Mode (2 / 4)", 10, ofGetHeight()-10);
+	}
+
     void drawMirrorDisplayMode(){
         ofSetColor(ofColor::white);
         openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
         
-        // get number of current users
-        int numUsers = openNIDevice.getNumTrackedUsers();
+		
         
-        // iterate through users
-        for (int i = 0; i < numUsers; i++){
-            
-            // get a reference to this user
-            ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
-            
-            // draw the skeleton
-            user.drawSkeleton();
-        }
-        
-        ofDrawBitmapStringHighlight("Mirror Display Mode", 10, ofGetHeight()-10);
+        ofDrawBitmapStringHighlight("Mirror Display Mode (1 / 4)", 10, ofGetHeight()-10);
     }
 
     void drawSilhouetteDisplayMode(){
-        ofSetColor(ofColor::white);
-        openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
-        
-        // get number of current users
+		// get number of current users
         int numUsers = openNIDevice.getNumTrackedUsers();
+
+		if(numUsers>0) ofBackground(255);
+		else ofBackground(0);
+		
+		glEnable(GL_BLEND);
+		// add the masks together
+		glBlendFunc(GL_ONE, GL_ONE_MINUS_DST_ALPHA);
+
+        ofSetColor(ofColor::white);
         
+        
+		glPushMatrix();
+		glScalef(ofGetWidth()/openNIDevice.getWidth(), ofGetHeight()/openNIDevice.getHeight(), 1);
         // iterate through users
         for (int i = 0; i < numUsers; i++){
             
@@ -98,14 +121,16 @@ public:
             ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
             
             // draw the skeleton
-            user.drawSkeleton();
+            // user.drawSkeleton();
+			user.drawMask();
         }
-        
-        ofDrawBitmapStringHighlight("Silhouette Display Mode", 10, ofGetHeight()-10);
+		glPopMatrix();
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofDrawBitmapStringHighlight("Silhouette Display Mode (3 / 4)", 10, ofGetHeight()-10);
     }
 
     void drawInvisibleDisplayMode(){
         //nothing as yet... (-;
-        ofDrawBitmapStringHighlight("Invisible Display Mode", 10, ofGetHeight()-10);
+        ofDrawBitmapStringHighlight("Invisible Display Mode (4 / 4)", 10, ofGetHeight()-10);
     }
 };

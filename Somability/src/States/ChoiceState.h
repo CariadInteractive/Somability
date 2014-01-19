@@ -41,4 +41,5 @@ public:
 	void draw();
 	void mousePressed(int x, int y, int button);
 	string getName();
+	void stateEnter();
 };

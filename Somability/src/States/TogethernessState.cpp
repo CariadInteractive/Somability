@@ -31,24 +31,34 @@
  */
 #include "TogethernessState.h"
 void TogethernessState::setup() {
+	person = new ofxBox2dEdge();
+	sensitivity = 50;
+	
+	if(ofFile("micSensitivity.txt").exists()) {
+		sensitivity = ofToInt(ofBufferFromFile("micSensitivity.txt").getText());
+	}
 	soundStream.setup(0, 2, 44100, 512, 1);
 	soundStream.setInput(this);
 	soundStream.stop();
-	volumeThreshold = 0.2;
 	audioFramesSinceLastFired = 0;
 	MIN_FRAMES_BETWEEN_FIRES = 0.3 * 44100; // 0.3 seconds at 44.1kHz
 	boing.loadSound("boing.wav");
 	mustFire = false;
 	MAX_SHAPE_AGE = 20;
+
+	greyImg.allocate(640, 480);
+	buff = new unsigned char[640*480];
 }
 
 void TogethernessState::shoot() {
 	ofxBox2dCircle *c = new ofxBox2dCircle();
 	
-	float r = ofRandom(20, 42);
+	float r = 25;
 	c->setPhysics(3.0, 0.53, 0.1);
-	c->setup(getSharedData().box2d.getWorld(), ofGetMouseX(), ofGetMouseY(), r);
-	c->setVelocity(5,0 );
+	c->setup(getSharedData().box2d.getWorld(), getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight()/2, r);
+	ofVec2f v(-20,0);
+	v.rotateRad(shootingAngle);
+	c->setVelocity(v);
 	shapes.push_back(ofPtr<ofxBox2dBaseShape>(c));
 	data[c] = ShapeData(ofGetElapsedTimef());
 
@@ -62,16 +72,58 @@ bool TogethernessState::shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape) 
 	return false;
 }
 
+
 void TogethernessState::update()
 {
+	
+	shootingAngle = ofMap(sin(ofGetElapsedTimef()/3), -1, 1, -PI/8, PI/4);
+	
 	if(mustFire) {
 		boing.play();
 		shoot();
 		
 		
 		mustFire = false;
-
 	}
+	
+	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
+	greyImg.set(0);
+	for(int i =0 ; i < numUsers; i++) {
+		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
+		unsigned char *c = user.getMaskPixels().getPixels();
+		if(c!=NULL) {
+			int nc = user.getMaskPixels().getNumChannels();
+			
+			
+			for(int i = 0; i < 640*480; i++) {
+				buff[i] = (255 - c[i*nc + nc - 1])>127?255:0;
+			}
+			greyImg.setFromPixels(buff, 640, 480);
+		} else {
+			greyImg.set(0);
+			ofLogError() << "Pixel mask of person is null!";
+		}
+	}
+	
+	
+	if(greyImg.getWidth()>0) {
+		contours.findContours(greyImg, 50, 480*480, 20, false);
+	}
+	person->clear();
+	if(contours.nBlobs>0) {
+		for(int i = 0; i < contours.blobs[0].nPts; i++) {
+			ofVec3f p = contours.blobs[0].pts[i];
+			p.z = 0;
+			person->addVertex(p);
+		}
+	}
+	person->simplify(5);
+	//if(person->size()>2) {
+		person->setPhysics(0,0,0);
+		person->create(getSharedData().box2d.getWorld());
+		person->flagHasChanged();
+		person->updateShape();
+	//}
 	
 	getSharedData().box2d.update();
     
@@ -85,7 +137,7 @@ void TogethernessState::update()
 			i--;
 		}
 	}
-
+	
 	
 	
 	
@@ -93,11 +145,24 @@ void TogethernessState::update()
 
 void TogethernessState::draw()
 {
-//    getSharedData().drawCorrectDisplayMode();
+	getSharedData().drawCorrectDisplayMode();
+	glPushMatrix();
+	
+	
+	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
+			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
+			 1);
+	
+	ofNoFill();
 	ofSetColor(255);
-	getSharedData().openNIDevice.drawDepth(0, 0, ofGetWidth(), ofGetHeight());
+	//greyImg.draw(0,0);
+	person->draw();
+	ofFill();
+	
+	ofSetColor(255);
+	//getSharedData().openNIDevice.drawDepth(0, 0, ofGetWidth(), ofGetHeight());
 	ofSetColor(255, 0, 0);
-	getSharedData().font.drawString("Togetherness", ofGetWidth() >> 1, ofGetHeight() >> 1);
+	getSharedData().font.drawString(getName(), 5, 30);
 	
 	
 	ofFill();
@@ -106,8 +171,18 @@ void TogethernessState::draw()
     for(int i=0; i<shapes.size(); i++) {
 		shapes[i].get()->draw();
 	}
-
 	
+	// draw the cannon
+	glPushMatrix();
+	glTranslatef(getSharedData().openNIDevice.getWidth(),getSharedData().openNIDevice.getHeight()/2, 0);
+	glRotatef(ofRadToDeg(shootingAngle),0,0,1);
+	ofSetColor(255);
+	ofRect(30, -20, -100, 40);
+	glPopMatrix();
+	//contours.draw();
+	glPopMatrix();
+	ofSetColor(255);
+	ofDrawBitmapString("Use the up and down arrow keys to change audio sensitivity ("+ofToString(sensitivity)+" / 100)", 5, 60);
 
 }
 
@@ -119,6 +194,7 @@ string TogethernessState::getName()
 void TogethernessState::mousePressed(int x, int y, int button)
 {
 	changeState("choice");
+	//mustFire = true;
 }
 
 void TogethernessState::tryToFire() {
@@ -127,11 +203,14 @@ void TogethernessState::tryToFire() {
 
 
 void TogethernessState::audioIn(float *samples, int length, int numChannels) {
+	float threshold = (100-sensitivity)/100.f;
+	threshold *= threshold;
+
 	for(int i =0 ; i < length; i++) {
 		float f = ABS(samples[i]);
 		if(volume<f) volume = f;
 		else volume *= 0.999;
-		if(volume>volumeThreshold) {
+		if(volume>threshold) {
 			if(audioFramesSinceLastFired>MIN_FRAMES_BETWEEN_FIRES) {
 				tryToFire();
 				audioFramesSinceLastFired = 0;
@@ -143,9 +222,25 @@ void TogethernessState::audioIn(float *samples, int length, int numChannels) {
 }
 
 void TogethernessState::stateEnter() {
+	
+	ofSetWindowTitle(getName());
+		
 	soundStream.start();
 }
 void TogethernessState::stateExit() {
 
+
+	
 	soundStream.stop();
+}
+
+void TogethernessState::keyPressed(int k) {
+	if(k==OF_KEY_DOWN) {
+		sensitivity--;
+	}else if (k==OF_KEY_UP) {
+		sensitivity++;
+	}
+	sensitivity = ofClamp(sensitivity, 0, 100);
+	ofBuffer b(ofToString(sensitivity));
+ofBufferToFile("micSensitivity.txt", b);
 }

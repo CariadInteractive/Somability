@@ -33,21 +33,43 @@
 
 void StillnessState::update()
 {
+	int NUM_TRAILS_PER_LIMB = 3;
+	
 	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
 	for(int i =0 ; i < numUsers; i++) {
 		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
-		int numJoints = user.getNumJoints();
+	
+		int numJoints = user.getNumLimbs();
 		int id = user.getXnID();
-		for(int j = 0; j < JOINT_COUNT; j++) {
-			int myId = id * 100 + j;
-			trails[myId].update(user.getJoint((Joint)j).getProjectivePosition());
+		for(int j = 0; j < LIMB_COUNT; j++) {
+			ofxOpenNILimb &limb = user.getLimb((Limb)j);
+			
+			ofVec3f a = limb.getStartJoint().getProjectivePosition();
+			ofVec3f b = limb.getEndJoint().getProjectivePosition();
+			// zero depth
+			a.z = 0;
+			b.z = 0;
+			ofVec3f d = b - a;
+			for(int k = 0; k < NUM_TRAILS_PER_LIMB; k++) {
+
+				int myId = id * 10000 + j*100+k;
+				float p = (float)k/NUM_TRAILS_PER_LIMB;
+
+				trails[myId].update(a + d * p);
+			}
 		}
+		
 	}
-	//trails[0].update(ofVec2f(ofGetMouseX(), ofGetMouseY()));
-}
+	
+	map<int,Trail>::iterator it = trails.begin();
+	while(it!=trails.end()) {
+		(*it).second.update2();
+		it++;
+	}}
 
 void StillnessState::draw()
 {
+	getSharedData().drawCorrectDisplayMode();
 	ofSetColor(255);
 	//getSharedData().openNIDevice.drawDepth(0, 0, ofGetWidth(), ofGetHeight());
 	ofSetColor(0);
@@ -59,11 +81,11 @@ void StillnessState::draw()
 			 1);
 	
 			 
-	getSharedData().openNIDevice.drawSkeletons();
+	//getSharedData().openNIDevice.drawSkeletons();
 //	getSharedData().drawCorrectDisplayMode();
 	glLineWidth(25);
     ofSetColor(255, 0, 0);
-	getSharedData().font.drawString("Stillness", ofGetWidth() >> 1, ofGetHeight() >> 1);
+	getSharedData().font.drawString(getName(), 5, 30);
 	map<int,Trail>::iterator it = trails.begin();
 	while(it!=trails.end()) {
 		(*it).second.draw();
@@ -97,8 +119,10 @@ void StillnessState::mouseMoved(int x, int y, int button) {
 }
 
 void StillnessState::stateEnter() {
-	ofRemoveListener(getSharedData().openNIDevice.userEvent, this, &StillnessState::userEvent);
+	ofSetWindowTitle(getName());
+	
+	ofAddListener(getSharedData().openNIDevice.userEvent, this, &StillnessState::userEvent);
 }
 void StillnessState::stateExit() {
-	ofAddListener(getSharedData().openNIDevice.userEvent, this, &StillnessState::userEvent);
+	ofRemoveListener(getSharedData().openNIDevice.userEvent, this, &StillnessState::userEvent);
 }
