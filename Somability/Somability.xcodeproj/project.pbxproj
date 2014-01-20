@@ -607,6 +607,7 @@
 		E90542C149C83316678AB011 /* cxmisc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cxmisc.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/cxmisc.h; sourceTree = SOURCE_ROOT; };
 		EA392DBA188963EB00D0B388 /* Trail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trail.cpp; sourceTree = "<group>"; };
 		EA392DBB188963EB00D0B388 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trail.h; sourceTree = "<group>"; };
+		EA72E100188C9F9400502760 /* Ding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ding.h; sourceTree = "<group>"; };
 		EAC7229CC8FEF0087C9482F1 /* b2PrismaticJoint.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2PrismaticJoint.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp; sourceTree = SOURCE_ROOT; };
 		ECC34C470C60F0A2AE2761B1 /* random.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = random.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/random.h; sourceTree = SOURCE_ROOT; };
 		ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxGuiGroup.cpp; path = ../../../addons/ofxGui/src/ofxGuiGroup.cpp; sourceTree = SOURCE_ROOT; };
@@ -1150,6 +1151,7 @@
 				5DE0BFAA18858BAA00FD1205 /* CollectingState.cpp */,
 				5DE0BFAB18858BAA00FD1205 /* CollectingState.h */,
 				5D59566A18856CEB007A0F44 /* SharedData.h */,
+				EA72E100188C9F9400502760 /* Ding.h */,
 				5DE0BFAF18858ECA00FD1205 /* RhythmState.cpp */,
 				5DE0BFB018858ECA00FD1205 /* RhythmState.h */,
 			);

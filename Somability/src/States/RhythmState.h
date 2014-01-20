@@ -33,15 +33,27 @@
 
 #include "ofxState.h"
 #include "SharedData.h"
+#include "Ding.h"
+
+class Feet {
+public:
+	ofVec2f lFoot;
+	ofVec2f rFoot;
+};
 
 class RhythmState : public itg::ofxState<SharedData>
 {
 public:
-	
+	void setup();
 	void update();
 	void draw();
 	void mousePressed(int x, int y, int button);
 	void stateEnter();
-
+	void trigger(ofVec2f p);
 	string getName();
+	ofSoundPlayer sound;
+	vector<Ding> dings;
+	
+	void updateFeet(int id, ofVec2f l, ofVec2f r);
+	map<int,Feet> feet;
 };

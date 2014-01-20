@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void testApp::setup() {
-    
+    ofSetCircleResolution(80);
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetFrameRate(30);
     ofBackground(ofColor::black);
@@ -137,6 +137,7 @@ void testApp::keyPressed(int key){
             break;
         case '2':
             stateMachine.getSharedData().theDisplayMode = MIRROR_SKELETON;
+			break;
 		case '3':
             stateMachine.getSharedData().theDisplayMode = SILHOUETTE;
             break;

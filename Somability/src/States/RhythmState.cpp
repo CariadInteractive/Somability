@@ -30,20 +30,13 @@
  *
  */
 #include "RhythmState.h"
+void RhythmState::setup() {
+	sound.loadSound("chime-up-short.wav");
+}
 
-void RhythmState::update()
-{
-}
-void RhythmState::stateEnter() {
-	ofSetWindowTitle(getName());
-}
-void RhythmState::draw()
-{
-	getSharedData().drawCorrectDisplayMode();
-    
-    ofSetColor(255, 0, 0);
-	getSharedData().font.drawString(getName(), 5, 30);
-	
+
+
+void RhythmState::update() {
 	
 	// get number of current users
     int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
@@ -55,11 +48,54 @@ void RhythmState::draw()
         ofxOpenNIUser & user = getSharedData().openNIDevice.getTrackedUser(i);
         
         // draw the mask texture for this user
-       // user.drawMask();
-        
+		// user.drawMask();
+		int id = user.getXnID();
+		updateFeet(id, user.getJoint(JOINT_LEFT_FOOT).getProjectivePosition(),
+				   user.getJoint(JOINT_RIGHT_FOOT).getProjectivePosition());
 		
 		
 	}
+}
+
+void RhythmState::updateFeet(int id, ) {
+
+}
+
+void RhythmState::stateEnter() {
+	ofSetWindowTitle(getName());
+}
+void RhythmState::draw()
+{
+	getSharedData().drawCorrectDisplayMode();
+    
+	glPushMatrix();
+	
+	
+	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
+			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
+			 1);
+
+	
+	
+    ofSetColor(255, 0, 0);
+	getSharedData().font.drawString(getName(), 5, 30);
+	
+	
+	
+	for(int i = 0; i < dings.size(); i++) {
+		dings[i].draw();
+		if(dings[i].isDead()) {
+			dings.erase(dings.begin() + i);
+			i--;
+		}
+	}
+	
+	glPopMatrix();
+}
+
+void RhythmState::trigger(ofVec2f p) {
+	sound.play();
+	dings.push_back(Ding(p));
 }
 
 string RhythmState::getName()
@@ -69,6 +105,14 @@ string RhythmState::getName()
 
 void RhythmState::mousePressed(int x, int y, int button)
 {
-	changeState("choice");
+	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+	ofVec2f k(getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight());
+	ofVec2f s(ofGetWidth(), ofGetHeight());
+	
+	m = m*k/s;
+	
+
+	trigger(m);
+	//	changeState("choice");
 }
 
