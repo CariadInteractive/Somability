@@ -72,20 +72,8 @@ public:
 	void drawMirrorSkeletonDisplayMode() {
 		ofSetColor(ofColor::white);
         openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
-        
-		glPushMatrix();
-		glScalef((float)openNIDevice.getWidth()/ofGetWidth(), (float)openNIDevice.getHeight(), 1);
-		 // iterate through users
-		int numUsers = openNIDevice.getNumTrackedUsers();
-		 for (int i = 0; i < numUsers; i++){
-		 
-			 // get a reference to this user
-			 ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
-			 
-			 // draw the skeleton
-			 user.drawSkeleton();
-		 }
-		glPopMatrix();
+        openNIDevice.drawSkeletons(0, 0, ofGetWidth(), ofGetHeight());
+		
 		 ofDrawBitmapStringHighlight("Mirror + Skeletons Display Mode (2 / 4)", 10, ofGetHeight()-10);
 	}
 

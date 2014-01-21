@@ -57,8 +57,14 @@ void RhythmState::update() {
 	}
 }
 
-void RhythmState::updateFeet(int id, ) {
-
+void RhythmState::updateFeet(int id, ofVec2f l, ofVec2f r) {
+	feet[id].update(l, r);
+	int f = feet[id].justStamped();
+		
+	if(f!=0) {
+		if(f==1) trigger(l);
+		else trigger(r);
+	}
 }
 
 void RhythmState::stateEnter() {

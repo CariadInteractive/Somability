@@ -23,10 +23,12 @@ public:
 	bool isDead() {
 		return dead;
 	}
+	int maxAge;
 	Ding(ofVec2f epi) {
 		this->epi = epi;
 		frame = 0;
 		dead = false;
+		maxAge = 30;
 	}
 	void update() {
 		if(frame<10) {
@@ -42,15 +44,18 @@ public:
 			dingRings[i].height += increment.y;
 		}
 		frame++;
-		if(frame>100) dead = true;
+		if(frame>maxAge-dingRings.size() && dingRings.size()>0) dingRings.erase(dingRings.begin());
+		if(frame>maxAge) dead = true;
 	}
 	
 	void draw() {
 		update();
 		ofNoFill();
 		glLineWidth(20);
-		ofSetColor(255, 255, 0);
+
 		for(int i = 0; i < dingRings.size(); i++) {
+		ofSetColor(255, 255, ofMap(i, 0, dingRings.size(), 0, 255, true),
+				   ofMap(frame, 0, maxAge, 255, 0, true));
 			ofEllipse(dingRings[i].getCenter(), dingRings[i].getWidth(), dingRings[i].getHeight());
 		}
 		glLineWidth(1);

@@ -39,6 +39,44 @@ class Feet {
 public:
 	ofVec2f lFoot;
 	ofVec2f rFoot;
+	
+	deque<ofVec2f> lHist;
+	deque<ofVec2f> rHist;
+	
+	float lastTimeStamped;
+	int MAX_LENGTH;
+	Feet() {
+		lastTimeStamped = 0;
+		MAX_LENGTH = 5;
+	}
+	
+	void update(ofVec2f left, ofVec2f right) {
+		lHist.push_front(left);
+		rHist.push_front(right);
+		if(lHist.size()>MAX_LENGTH) lHist.pop_back();
+		if(rHist.size()>MAX_LENGTH) rHist.pop_back();
+	}
+	
+	float footDiff(int i) {
+		return (lHist[i].y - rHist[i].y);
+	}
+	
+	float footAbs(int i) {
+		return ABS(footDiff(i));
+	}
+	
+	int justStamped() {
+		
+		float minDiff = 2;
+		float maxDiff = 10;
+		
+		if(ofGetElapsedTimef()-lastTimeStamped<0.2) return 0;
+		if(lHist.size()<MAX_LENGTH || rHist.size()<MAX_LENGTH) return 0;
+		if(footAbs(0)<minDiff && footAbs(MAX_LENGTH-1)>maxDiff) {
+			return footDiff(MAX_LENGTH-1)>0?-1:1;
+		}
+		return 0;
+	}
 };
 
 class RhythmState : public itg::ofxState<SharedData>
