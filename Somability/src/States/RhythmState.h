@@ -55,6 +55,8 @@ public:
 		rHist.push_front(right);
 		if(lHist.size()>MAX_LENGTH) lHist.pop_back();
 		if(rHist.size()>MAX_LENGTH) rHist.pop_back();
+		
+		printf("%f\n", footDiff(0));
 	}
 	
 	float footDiff(int i) {

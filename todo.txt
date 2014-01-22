@@ -1,0 +1,28 @@
+stillness 
+---------
+make lines change thickness with speed
+ofxFatLines
+
+collecting
+----------
+make shapes smaller and maybe come down a bit faster
+gradients on shapes
+make square smaller
+swap triangle and square round
+make the feedback more visible when touching the shape - maybe make the shape bigger, turn off gradient, make a border
+
+togetherness
+------------
+differeny sizes of balls
+
+
+
+
+enfys
+-----
+colour tracking gloves instead of optical flow
+
+
+Dan Joyce film
+--------------
+Wendy will confirm 20-21st for filming when budget comes through

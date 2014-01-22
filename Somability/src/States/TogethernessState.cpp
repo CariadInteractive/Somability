@@ -156,7 +156,7 @@ void TogethernessState::draw()
 	ofNoFill();
 	ofSetColor(255);
 	//greyImg.draw(0,0);
-	person->draw();
+	//person->draw();
 	ofFill();
 	
 	ofSetColor(255);
