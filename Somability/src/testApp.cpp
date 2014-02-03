@@ -11,10 +11,11 @@ void testApp::setup() {
 	stateMachine.getSharedData().counter = 0;
 	stateMachine.getSharedData().lastUpdate = ofGetElapsedTimeMillis();
 	stateMachine.getSharedData().font.loadFont("verdana.ttf", 24);
-    
+	
     //openni into state machine now
     stateMachine.getSharedData().openNIDevice.setup();
-    stateMachine.getSharedData().openNIDevice.addImageGenerator();
+#ifndef _WIN32 
+	stateMachine.getSharedData().openNIDevice.addImageGenerator();
     stateMachine.getSharedData().openNIDevice.addDepthGenerator();
     stateMachine.getSharedData().openNIDevice.setRegister(true);
     stateMachine.getSharedData().openNIDevice.setMirror(true);
@@ -29,12 +30,12 @@ void testApp::setup() {
     stateMachine.getSharedData().openNIDevice.setUsePointCloudsAllUsers(true);
     stateMachine.getSharedData().openNIDevice.setPointCloudDrawSizeAllUsers(2); // size of each 'point' in the point cloud
     stateMachine.getSharedData().openNIDevice.setPointCloudResolutionAllUsers(2); // resolution of the mesh created for the point cloud eg., this will use every second depth pixel
-    
+ #endif   
     //now do box2D
-	stateMachine.getSharedData().box2d.init();
-	stateMachine.getSharedData().box2d.setGravity(0, 10);
-	stateMachine.getSharedData().box2d.createBounds(0,0,640, 480);
-	stateMachine.getSharedData().box2d.setFPS(30.0);
+	stateMachine.getSharedData().box2d->init();
+	stateMachine.getSharedData().box2d->setGravity(0, 10);
+	stateMachine.getSharedData().box2d->createBounds(0,0,640, 480);
+	stateMachine.getSharedData().box2d->setFPS(30.0);
 	//stateMachine.getSharedData().box2d.registerGrabbing();
 	
 	// initialise state machine
@@ -93,7 +94,7 @@ void testApp::drawKinectDebug(){
         ofPushMatrix();
         // move it a bit more central
         ofTranslate(320, 240, 10);
-        user.drawPointCloud();
+//        user.drawPointCloud();
         
         // you can also access the mesh:
         
@@ -112,7 +113,7 @@ void testApp::drawKinectDebug(){
 	ofSetColor(0, 255, 0);
 	string msg = " MILLIS: " + ofToString(ofGetElapsedTimeMillis()) + " FPS: " + ofToString(ofGetFrameRate()) + " Device FPS: " + ofToString(stateMachine.getSharedData().openNIDevice.getFrameRate());
     
-	stateMachine.getSharedData().font.drawString(msg, 20, stateMachine.getSharedData().openNIDevice.getNumDevices() * 480 - 20);
+//	stateMachine.getSharedData().font.drawString(msg, 20, stateMachine.getSharedData().openNIDevice.getNumDevices() * 480 - 20);
 
 }
 

@@ -31,7 +31,11 @@
  */
 #pragma once
 
+#ifdef _WIN32
+#include "Microsoft_ofxOpenNI.h"
+#else
 #include "ofxOpenNI.h"
+#endif
 #include "ofxBox2d.h"
 
 //enums http://www.cplusplus.com/doc/tutorial/other_data_types/
@@ -44,10 +48,13 @@ public:
 	int lastUpdate;
 	ofxOpenNI openNIDevice;
     ofTrueTypeFont font;
-    ofxBox2d box2d; //	the box2d world
+    ofxBox2d *box2d; //	the box2d world
     InteractionDisplayMode theDisplayMode;
     
 public:
+	SharedData() {
+		box2d = new ofxBox2d();
+	}
     void drawCorrectDisplayMode(){
         switch (theDisplayMode){
             case MIRROR:

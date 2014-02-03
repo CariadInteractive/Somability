@@ -55,7 +55,7 @@ void TogethernessState::shoot() {
 	
 	float r = 25;
 	c->setPhysics(3.0, 0.53, 0.1);
-	c->setup(getSharedData().box2d.getWorld(), getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight()/2, r);
+	c->setup(getSharedData().box2d->getWorld(), getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight()/2, r);
 	ofVec2f v(-20,0);
 	v.rotateRad(shootingAngle);
 	c->setVelocity(v);
@@ -120,12 +120,12 @@ void TogethernessState::update()
 	person->simplify(5);
 	//if(person->size()>2) {
 		person->setPhysics(0,0,0);
-		person->create(getSharedData().box2d.getWorld());
+		person->create(getSharedData().box2d->getWorld());
 		person->flagHasChanged();
 		person->updateShape();
 	//}
 	
-	getSharedData().box2d.update();
+	getSharedData().box2d->update();
     
     // remove shapes offscreen
     //ofRemove(shapes, ofxBox2dBaseShape::shouldRemoveOffScreen);

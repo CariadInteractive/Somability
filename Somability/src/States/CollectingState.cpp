@@ -78,7 +78,7 @@ void CollectingState::update()
 	
 	
 	
-    getSharedData().box2d.update();
+    getSharedData().box2d->update();
 	if(ofGetFrameNum()%10==0) {
 		if(handTouching[LEFT_HAND]!=NO_SHAPE) {
 			addShape(handTouching[LEFT_HAND], ofVec2f(ofRandom(0, getSharedData().openNIDevice.getWidth()), 1));
@@ -280,7 +280,7 @@ void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 		
 		float r = ofRandom(20, 42);
 		c->setPhysics(3.0, 0.53, 0.1);
-		c->setup(getSharedData().box2d.getWorld(), pos.x, pos.y, r);
+		c->setup(getSharedData().box2d->getWorld(), pos.x, pos.y, r);
 		shape = c;
 		
 	} else if(type==SQUARE) {
@@ -288,7 +288,7 @@ void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 		float h = w;
 		ofxBox2dRect *r = new ofxBox2dRect();
 		r->setPhysics(3.0, 0.53, 0.1);
-		r->setup(getSharedData().box2d.getWorld(), pos.x, pos.y, w, h);
+		r->setup(getSharedData().box2d->getWorld(), pos.x, pos.y, w, h);
 		shape = r;
 	} else if(type==TRIANGLE) {
 		float w = ofRandom(20, 42);
@@ -297,7 +297,7 @@ void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 		p->setPhysics(3.0, 0.53, 0.1);
 
 		p->addTriangle(ofVec2f(-w, h/2),ofVec2f(w, h/2), ofVec2f(0, -h/2));
-		p->create(getSharedData().box2d.getWorld());
+		p->create(getSharedData().box2d->getWorld());
 		p->setPosition(pos.x, pos.y);
 		shape = p;
 	} else if(type==HEXAGON) {
@@ -315,7 +315,7 @@ void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 			b.rotate(60);
 		}
 		
-		p->create(getSharedData().box2d.getWorld());
+		p->create(getSharedData().box2d->getWorld());
 		p->setPosition(pos.x, pos.y);
 		shape = p;
 	}

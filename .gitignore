@@ -31,3 +31,25 @@ Somability/bin/SomabilityRelease.app
 # marek added this
 *.app
 *.xcuserdatad
+/Somability/bin/*.exe
+/Somability/*.sdf
+*.suo
+/Somability/bin/*.dll
+*.exp
+/Somability/bin/*.ilk
+/Somability/bin/*.pdb
+/Somability/obj/Debug/*.tlog
+
+/Somability/obj/Debug/*.obj
+
+/Somability/obj/Debug/*.pdb
+
+/Somability/obj/Debug/*.log
+
+/Somability/obj/Debug/*.lastbuildstate
+
+/Somability/obj/Debug/*.cache
+
+/Somability/obj/Debug/*.idb
+
+/Somability/bin/*.lib

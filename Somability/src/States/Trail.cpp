@@ -77,7 +77,7 @@ void Trail::draw() {
 	deque<ofVec2f>::iterator it;
 	it = points.begin();
 	while(it!=points.end()) {
-		if(it._M_cur==NULL) break;
+//		if(it._M_cur==NULL) break;
 //		glColor4f(colour.r, colour.g, colour.b, alpha);
 //		glVertex2f((*it).x,(*it).y);
 		colour.a = ofMap(i, numPoints, 0, 1, 0, true);
