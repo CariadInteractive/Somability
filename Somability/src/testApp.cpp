@@ -119,7 +119,8 @@ void testApp::drawKinectDebug(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-//	drawKinectDebug();
+	ofSetColor(255);
+	stateMachine.getSharedData().openNIDevice.drawImage();
 }
 
 //--------------------------------------------------------------

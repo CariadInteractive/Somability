@@ -45,13 +45,16 @@ public:
 
 		if(startIt!=bones.end()) {
 			start.setup((*startIt).second);
-		}
+		
 
-		endIt = bones.find((_NUI_SKELETON_POSITION_INDEX)(*startIt).second.getEndJoint());
-
-		if(endIt!=bones.end()) {
-			end.setup((*endIt).second);
+			endIt = bones.find((_NUI_SKELETON_POSITION_INDEX)(*startIt).second.getEndJoint());
+			if(endIt!=bones.end()) {
+				end.setup((*endIt).second);
+			}
+		} else {
+			printf("startIt==bones.end()\n");
 		}
+		
 		//start.setup(bones[(_NUI_SKELETON_POSITION_INDEX)boneIndex]);
 		//int bi = bones[(_NUI_SKELETON_POSITION_INDEX)boneIndex].getEndJoint();
 		//end.setup(bones[(_NUI_SKELETON_POSITION_INDEX)bi]);

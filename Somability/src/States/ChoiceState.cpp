@@ -40,6 +40,7 @@ void ChoiceState::stateEnter() {
 }
 void ChoiceState::draw()
 {
+#if 0
     ofPushStyle(); //be polite
     
     float halfWindowWidth = ofGetWidth()/2.f;
@@ -67,6 +68,7 @@ void ChoiceState::draw()
     getSharedData().font.drawString("Collecting", bottomRight.getCenter().x, bottomRight.getCenter().y);
 	getSharedData().font.drawString("Click a Choice, click any time to return to this screen", 10.f, ofGetHeight()/2.f);
     ofPopStyle();
+#endif
 }
 
 string ChoiceState::getName()
