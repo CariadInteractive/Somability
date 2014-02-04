@@ -54,7 +54,12 @@ Somability/bin/SomabilityRelease.app
 
 /Somability/bin/*.lib
 
-/Somability/*.depend
-
-/Somability/*.layout
-/Somability/obj/Debug/*.unsuccessfulbuild
+*.obj
+*.tlog
+*.depend
+*.layout
+*.opensdf
+*.log
+*.pdb
+*.cache
+*.lastbuildstate
