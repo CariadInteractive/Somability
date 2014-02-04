@@ -53,3 +53,12 @@ Somability/bin/SomabilityRelease.app
 /Somability/obj/Debug/*.idb
 
 /Somability/bin/*.lib
+*.obj
+*.tlog
+*.depend
+*.layout
+*.opensdf
+*.log
+*.pdb
+*.cache
+*.lastbuildstate

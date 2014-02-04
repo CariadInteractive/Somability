@@ -93,8 +93,8 @@ xcopy /e /i /y "..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\li
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>KinectCommonBridge.lib;Kinect10.lib;%(AdditionalDependencies);opencv_haartraining_engine.lib;opencv_core231.lib;opencv_contrib231.lib;opencv_features2d231.lib;opencv_objdetect231.lib;opencv_highgui231.lib;opencv_flann231.lib;opencv_legacy231.lib;opencv_gpu231.lib;opencv_calib3d231.lib;opencv_imgproc231.lib;zlib.lib;opencv_ml231.lib;opencv_video231.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\lib\windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KinectCommonBridge.lib;Kinect10.lib;%(AdditionalDependencies);opencv_core231.lib;opencv_contrib231.lib;opencv_features2d231.lib;opencv_objdetect231.lib;opencv_highgui231.lib;opencv_flann231.lib;opencv_legacy231.lib;opencv_gpu231.lib;opencv_calib3d231.lib;opencv_imgproc231.lib;zlib.lib;opencv_ml231.lib;opencv_video231.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs;..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\lib\windows;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /e /i /y "$(ProjectDir)..\..\..\export\vs\*.dll" "$(ProjectDir)bin"

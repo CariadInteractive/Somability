@@ -2,6 +2,7 @@
 #include "Microsoft_ofxOpenNI.h"
 
 
+ofxKinectCommonBridge *ofxOpenNI::kinect = NULL;
 
 
 
@@ -10,9 +11,8 @@ void ofxOpenNIUser::init(int i, Skeleton &skel) {
 	this->skel = skel;
 	index = i;
 }
-
 void ofxOpenNIUser::drawMask() {
-	
+	ofxOpenNI::kinect->drawPlayerTextures(0,0,640,480);
 }
 
 
@@ -52,18 +52,19 @@ int ofxOpenNIUser::getXnID() {
 
 
 void ofxOpenNI::setup() {
-	kinect.initSensor();
-	kinect.initDepthStream(640, 480);
-	kinect.initColorStream(640, 480);
-	kinect.initSkeletonStream(false);
-	kinect.start();
+	kinect = new ofxKinectCommonBridge();
+	kinect->initSensor();
+	kinect->initDepthStream(640, 480);
+	kinect->initColorStream(640, 480);
+	kinect->initSkeletonStream(false);
+	kinect->start();
 }
 
 
 void ofxOpenNI::update() {
-	kinect.update();
+	kinect->update();
 	users.clear();
-	vector<Skeleton> &skels = kinect.getSkeletons();
+	vector<Skeleton> &skels = kinect->getSkeletons();
 	for(int i = 0; i <skels.size(); i++) {
 		users.push_back(ofxOpenNIUser());
 		users.back().init(i, skels[i]);
@@ -80,10 +81,10 @@ void ofxOpenNI::drawDebug() {
 	glPushMatrix();
 	glScalef(ofGetWidth()/getWidth(), ofGetHeight()/getHeight(), 1);
 
-	kinect.drawDepth(0, 0, getWidth(), getHeight());
+	kinect->drawDepth(0, 0, getWidth(), getHeight());
 	int sk = getNumTrackedUsers();
 	for(int i = 0; i < sk; i++) {
-		kinect.drawSkeleton(i);
+		kinect->drawSkeleton(i);
 	}
 	glPopMatrix();
 }
@@ -95,7 +96,9 @@ float ofxOpenNI::getFrameRate() {
 
 
 void ofxOpenNI::drawImage(float x, float y, float w, float h) {
-	kinect.draw(x, y, w, h);
+	ofDisableAlphaBlending();
+	kinect->draw(x, y, w, h);
+	ofEnableAlphaBlending();
 }
 
 
@@ -105,7 +108,7 @@ void ofxOpenNI::drawSkeletons(float x, float y, float w, float h) {
 
 	int sk = getNumTrackedUsers();
 	for(int i = 0; i < sk; i++) {
-		kinect.drawSkeleton(i);
+		kinect->drawSkeleton(i);
 	}
 	glPopMatrix();
 }
@@ -113,7 +116,7 @@ void ofxOpenNI::drawSkeletons(float x, float y, float w, float h) {
 
 	
 void ofxOpenNI::drawMask() {
-
+	kinect->drawPlayerTextures(0,0,640,480);
 }
 
 

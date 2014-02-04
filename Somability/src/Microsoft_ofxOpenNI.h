@@ -84,8 +84,7 @@ public:
 };
 
 class ofxOpenNI {
-private:
-	ofxKinectCommonBridge kinect;
+	
 public:
 	void setup();
 	void update();
@@ -103,6 +102,7 @@ public:
 	ofxOpenNIUser &getTrackedUser(int pos);
 	ofEvent<ofxOpenNIUserEvent> userEvent;
 	vector<ofxOpenNIUser> users;
+	static ofxKinectCommonBridge *kinect;
 };
 
 

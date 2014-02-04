@@ -120,6 +120,7 @@ void testApp::drawKinectDebug(){
 //--------------------------------------------------------------
 void testApp::draw(){
 //	drawKinectDebug();
+	stateMachine.getSharedData().openNIDevice.drawMask();
 }
 
 //--------------------------------------------------------------
