@@ -111,14 +111,14 @@ string RhythmState::getName()
 
 void RhythmState::mousePressed(int x, int y, int button)
 {
-	ofVec2f m(ofGetMouseX(), ofGetMouseY());
-	ofVec2f k(getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight());
-	ofVec2f s(ofGetWidth(), ofGetHeight());
-	
-	m = m*k/s;
-	
-
-	trigger(m);
-	//	changeState("choice");
+//	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+//	ofVec2f k(getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight());
+//	ofVec2f s(ofGetWidth(), ofGetHeight());
+//	
+//	m = m*k/s;
+//	
+//
+//	trigger(m);
+	changeState("choice");
 }
 
