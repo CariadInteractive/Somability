@@ -120,12 +120,12 @@ void testApp::drawKinectDebug(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	ofSetColor(255);
-	stateMachine.getSharedData().openNIDevice.drawImage();
+	//stateMachine.getSharedData().openNIDevice.drawImage();
 }
 
 //--------------------------------------------------------------
 void testApp::exit(){
-    stateMachine.getSharedData().openNIDevice.stop();
+ //   stateMachine.getSharedData().openNIDevice.stop();
 }
 
 //--------------------------------------------------------------

@@ -52,7 +52,7 @@ public:
 				end.setup((*endIt).second);
 			}
 		} else {
-			printf("startIt==bones.end()\n");
+			//printf("startIt==bones.end()\n");
 		}
 		
 		//start.setup(bones[(_NUI_SKELETON_POSITION_INDEX)boneIndex]);

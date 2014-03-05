@@ -62,7 +62,7 @@ void ofxOpenNI::setup() {
 	r = kinect->initColorStream(640, 480, true);
 	if(!r) ofLogError() << "Couldn't init color stream!";
 
-//	r = kinect.initSkeletonStream(false);
+	r = kinect->initSkeletonStream(false);
 	if(!r) ofLogError() << "Couldn't init skeleton stream!";
 
 	r = kinect->start();
@@ -74,9 +74,11 @@ void ofxOpenNI::setup() {
 
 
 void ofxOpenNI::update() {
+	//printf("Update\n");
 	kinect->update();
 	users.clear();
 	vector<Skeleton> &skels = kinect->getSkeletons();
+	if(skels.size()) printf("%d  %d\n", ofGetFrameNum(), skels.size());
 	for(int i = 0; i <skels.size(); i++) {
 		users.push_back(ofxOpenNIUser());
 		users.back().init(i, skels[i]);
@@ -85,6 +87,7 @@ void ofxOpenNI::update() {
 
 
 void ofxOpenNI::stop() {
+	//printf("Stop\n");
 	kinect->stop();
 }
 
@@ -110,7 +113,8 @@ void ofxOpenNI::drawImage(float x, float y, float w, float h) {
 
 	//printf("%f  %f  %f %f\n", x, y, w, h);
 	ofDisableAlphaBlending();
-	kinect->drawDepth(x, y, w, h);
+	//kinect->drawDepth(x, y, w, h);
+	kinect->draw(x, y, w, h);
 	ofEnableAlphaBlending();
 	//kinect.getColorPixelsRef().draw(x, y, w, h);
 
