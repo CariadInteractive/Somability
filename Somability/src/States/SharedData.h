@@ -31,11 +31,11 @@
  */
 #pragma once
 
-//#ifdef _WIN32
-//#include "Microsoft_ofxOpenNI.h"
-//#else
+#ifdef _WIN32
+#include "Microsoft_ofxOpenNI.h"
+#else
 #include "ofxOpenNI.h"
-//#endif
+#endif
 #include "ofxBox2d.h"
 
 //enums http://www.cplusplus.com/doc/tutorial/other_data_types/

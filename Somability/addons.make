@@ -2,5 +2,5 @@ ofxOpenCv
 ofxOsc
 ofxXmlSettings
 ofxBox2d
-ofxOpenNI
+ofxKinectCommonBridge
 ofxStateMachine

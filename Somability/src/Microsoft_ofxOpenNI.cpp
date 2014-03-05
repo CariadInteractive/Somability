@@ -52,20 +52,20 @@ int ofxOpenNIUser::getXnID() {
 
 
 void ofxOpenNI::setup() {
-
-	bool r = kinect.initSensor();
+	kinect = new ofxKinectCommonBridge();
+	bool r = kinect->initSensor();
 	if(!r) ofLogError() << "Couldn't init sensor!";
 
-	r = kinect.initDepthStream(640, 480, true, true);
+	r = kinect->initDepthStream(640, 480, true, true);
 	if(!r) ofLogError() << "Couldn't init depth stream!";
 
-	r = kinect.initColorStream(640, 480, true);
+	r = kinect->initColorStream(640, 480, true);
 	if(!r) ofLogError() << "Couldn't init color stream!";
 
 //	r = kinect.initSkeletonStream(false);
 	if(!r) ofLogError() << "Couldn't init skeleton stream!";
 
-	r = kinect.start();
+	r = kinect->start();
 	if(!r) ofLogError() << "Couldn't start kinect!";
 	
 	ofLogNotice() << "Started kinect";
@@ -85,7 +85,7 @@ void ofxOpenNI::update() {
 
 
 void ofxOpenNI::stop() {
-	kinect.stop();
+	kinect->stop();
 }
 
 
@@ -106,11 +106,11 @@ float ofxOpenNI::getFrameRate() {
 	return 30;
 }
 
-
+void ofxOpenNI::drawImage(float x, float y, float w, float h) {
 
 	//printf("%f  %f  %f %f\n", x, y, w, h);
 	ofDisableAlphaBlending();
-	kinect.drawDepth(x, y, w, h);
+	kinect->drawDepth(x, y, w, h);
 	ofEnableAlphaBlending();
 	//kinect.getColorPixelsRef().draw(x, y, w, h);
 
