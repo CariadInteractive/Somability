@@ -93,7 +93,7 @@ xcopy /e /i /y "..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\li
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies);opencv_calib3d231.lib;opencv_contrib231.lib;opencv_core231.lib;opencv_features2d231.lib;opencv_flann231.lib;opencv_gpu231.lib;opencv_haartraining_engine.lib;opencv_highgui231.lib;opencv_imgproc231.lib;opencv_legacy231.lib;opencv_ml231.lib;opencv_objdetect231.lib;opencv_video231.lib;zlib.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);opencv_calib3d231.lib;opencv_contrib231.lib;opencv_core231.lib;opencv_features2d231.lib;opencv_flann231.lib;opencv_gpu231.lib;opencv_haartraining_engine.lib;opencv_highgui231.lib;opencv_imgproc231.lib;opencv_legacy231.lib;opencv_ml231.lib;opencv_objdetect231.lib;opencv_video231.lib;zlib.lib;KinectCommonBridge.lib;Kinect10.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs;..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\lib\windows</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -102,6 +102,8 @@ xcopy /e /i /y "..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\li
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\addons\ofxFatLines\src\ofxFatLine.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxFatLines\src\sincosineLut.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Microsoft_ofxOpenNI.cpp" />
     <ClCompile Include="src\States\ChoiceState.cpp" />
@@ -193,6 +195,8 @@ xcopy /e /i /y "..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\li
     <ClCompile Include="..\..\..\addons\ofxKinectCommonBridge\src\ofxKinectCommonBridge.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\addons\ofxFatLines\src\ofxFatLine.h" />
+    <ClInclude Include="..\..\..\addons\ofxFatLines\src\sincosineLut.h" />
     <ClInclude Include="src\Microsoft_ofxOpenNI.h" />
     <ClInclude Include="src\States\ChoiceState.h" />
     <ClInclude Include="src\States\CollectingState.h" />

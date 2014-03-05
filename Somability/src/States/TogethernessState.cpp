@@ -53,7 +53,7 @@ void TogethernessState::setup() {
 void TogethernessState::shoot() {
 	ofxBox2dCircle *c = new ofxBox2dCircle();
 	
-	float r = 25;
+	float r = ofRandom(15, 25);
 	c->setPhysics(3.0, 0.53, 0.1);
 	c->setup(getSharedData().box2d->getWorld(), getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight()/2, r);
 	ofVec2f v(-20,0);
@@ -88,20 +88,24 @@ void TogethernessState::update()
 	
 	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
 	greyImg.set(0);
+	unsigned char *pix = greyImg.getPixels();
+	
 	for(int i =0 ; i < numUsers; i++) {
+		
 		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
 		unsigned char *c = user.getMaskPixels().getPixels();
 		if(c!=NULL) {
 			int nc = user.getMaskPixels().getNumChannels();
-			
+				printf("%d channels\n", nc);
+			/*
 			
 			for(int i = 0; i < 640*480; i++) {
 				buff[i] = (255 - c[i*nc + nc - 1])>127?255:0;
-			}
+			}*/
 			greyImg.setFromPixels(buff, 640, 480);
 		} else {
 			greyImg.set(0);
-			ofLogError() << "Pixel mask of person is null!";
+			//ofLogError() << "Pixel mask of person is null!";
 		}
 	}
 	
@@ -221,26 +225,42 @@ void TogethernessState::audioIn(float *samples, int length, int numChannels) {
 	}
 }
 
+bool togethernessSoundStarted = false;
+
 void TogethernessState::stateEnter() {
 	
 	ofSetWindowTitle(getName());
-		
-	soundStream.start();
+	if(!togethernessSoundStarted) {
+		togethernessSoundStarted = true;
+		soundStream.start();
+
+	}
 }
 void TogethernessState::stateExit() {
 
 
 	
-	soundStream.stop();
+	//soundStream.stop();
 }
 
 void TogethernessState::keyPressed(int k) {
+	bool saveSensitivity = false;
+
 	if(k==OF_KEY_DOWN) {
 		sensitivity--;
+		saveSensitivity = true;
 	}else if (k==OF_KEY_UP) {
 		sensitivity++;
+		saveSensitivity = true;
+	} else if(k=='o') {
+		tryToFire();
 	}
-	sensitivity = ofClamp(sensitivity, 0, 100);
-	ofBuffer b(ofToString(sensitivity));
-ofBufferToFile("micSensitivity.txt", b);
+	if(saveSensitivity) {
+		sensitivity = ofClamp(sensitivity, 0, 100);
+		ofBuffer b(ofToString(sensitivity));
+		ofBufferToFile("micSensitivity.txt", b);
+	}
+
+
+
 }

@@ -45,10 +45,12 @@ public:
 	string getName();
     void stateEnter();
     vector    <ofPtr<ofxBox2dBaseShape> >	shapes;		  //	default box2d circles
-	
+	void drawShape(int shapeId, ofRectangle &rect);
+
 	enum ShapeID {
-		TRIANGLE,
+		
 		SQUARE,
+		TRIANGLE,
 		HEXAGON,
 		CIRCLE,
 		NUM_SHAPES,

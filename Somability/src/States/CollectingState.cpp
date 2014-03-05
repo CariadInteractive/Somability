@@ -70,8 +70,12 @@ void CollectingState::update()
 		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
 		ofxOpenNIJoint &j1 = user.getJoint(JOINT_LEFT_HAND);
 		ofxOpenNIJoint &j2 = user.getJoint(JOINT_RIGHT_HAND);
-		handMoved(j1.getProjectivePosition(), LEFT_HAND);
-		handMoved(j2.getProjectivePosition(), RIGHT_HAND);
+		
+		ofVec2f ap = j1.getProjectivePosition();
+		ofVec2f bp = j2.getProjectivePosition();
+
+		if(ap.x!=0) handMoved(ap, LEFT_HAND);
+		if(bp.x!=0) handMoved(bp, RIGHT_HAND);
 		
 	}
 	
@@ -158,31 +162,46 @@ void CollectingState::draw()
 	}
 	ofSetColor(255);
 	for(int i = 0; i < triggers.size(); i++) {
-		ofNoFill();
+		ofFill();
 		ofSetColor(255);
 		ShapeID shapeType = triggers[i].first;
 		
 		if(handTouching[LEFT_HAND]==shapeType || handTouching[RIGHT_HAND]==shapeType) {
-			drawFluffBall(triggers[i].second.getCenter(), triggers[i].second.getWidth()*0.9);
+			ofRectangle r = triggers[i].second;
+			ofPoint c = r.getCenter();
+			float scale = ofMap(sin(ofGetElapsedTimef()*3 + i), -1, 1, 1.1, 1.4);
+			r.setFromCenter(c, r.width * scale, r.height * scale);
+			drawShape(triggers[i].first, r);
+			//drawFluffBall(triggers[i].second.getCenter(), triggers[i].second.getWidth()*0.9);
 		}
 		
 		ofFill();
 		setColorForShape(triggers[i].first);
-		switch(triggers[i].first) {
+		drawShape(triggers[i].first, triggers[i].second);
+	}
+	
+	
+	glPopMatrix();
+}
+void CollectingState::drawShape(int shapeId, ofRectangle &rect) {
+	switch(shapeId) {
 			case CIRCLE:
-				ofCircle(triggers[i].second.getCenter(), triggers[i].second.width/2);
+				ofCircle(rect.getCenter(), rect.width/2);
 				break;
-			case SQUARE:
-				ofRect(triggers[i].second);
-				break;
+			case SQUARE:{
+				ofRectangle r = rect;
+				ofPoint p = r.getCenter();
+				r.setFromCenter(p, r.width * 0.8, r.height * 0.8);
+				ofRect(r);
+				break;}
 			case TRIANGLE:
 			{
 				ofBeginShape();
-				_ofVertex(triggers[i].second.getBottomLeft());
-				_ofVertex(triggers[i].second.getBottomRight());
+				_ofVertex(rect.getBottomLeft());
+				_ofVertex(rect.getBottomRight());
 				
-				ofVec2f v = (triggers[i].second.getBottomRight() + triggers[i].second.getBottomLeft())/2;
-				v.y -= triggers[i].second.height*sqrt(3)/2;
+				ofVec2f v = (rect.getBottomRight() + rect.getBottomLeft())/2;
+				v.y -= rect.height*sqrt(3)/2;
 				_ofVertex(v);
 				
 				ofEndShape();
@@ -191,9 +210,9 @@ void CollectingState::draw()
 			case HEXAGON:
 			{
 				glPushMatrix();
-				glTranslatef(triggers[i].second.getCenter().x, triggers[i].second.getCenter().y, 0);
+				glTranslatef(rect.getCenter().x, rect.getCenter().y, 0);
 				ofBeginShape();
-				ofVec2f v(triggers[i].second.width/2, 0);
+				ofVec2f v(rect.width/2, 0);
 				for(int i = 0; i < 6; i++) {
 					_ofVertex(v);
 					v.rotate(60);
@@ -204,12 +223,7 @@ void CollectingState::draw()
 			}
 				break;
 		}
-	}
-	
-	
-	glPopMatrix();
 }
-
 string CollectingState::getName()
 {
 	return "collecting";
@@ -250,6 +264,7 @@ void CollectingState::mouseMoved(int x, int y) {
 
 void CollectingState::handMoved(ofVec2f p, Hand hand) {
 	bool found = false;
+	printf("%f %f\n", p.x, p.y);
 	for(int i = 0; i < triggers.size(); i++) {
 		if(triggers[i].second.inside(p.x, p.y)) {
 			handTouching[hand] = triggers[i].first;
@@ -274,27 +289,31 @@ void CollectingState::mousePressed(int x, int y, int button)
 
 void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 	ofxBox2dBaseShape *shape = NULL;
+	float density = 10;
+	float minSize = 15;
+	float maxSize = 30;
+
 	if(type==CIRCLE) {
 		
 		ofxBox2dCircle *c = new ofxBox2dCircle();
 		
-		float r = ofRandom(20, 42);
-		c->setPhysics(3.0, 0.53, 0.1);
+		float r = ofRandom(minSize, maxSize);
+		c->setPhysics(density, 0.53, 0.1);
 		c->setup(getSharedData().box2d->getWorld(), pos.x, pos.y, r);
 		shape = c;
 		
 	} else if(type==SQUARE) {
-		float w = ofRandom(20, 42);
+		float w = ofRandom(minSize, maxSize);
 		float h = w;
 		ofxBox2dRect *r = new ofxBox2dRect();
-		r->setPhysics(3.0, 0.53, 0.1);
-		r->setup(getSharedData().box2d->getWorld(), pos.x, pos.y, w, h);
+		r->setPhysics(density, 0.53, 0.1);
+		r->setup(getSharedData().box2d->getWorld(), pos.x, pos.y, w*0.8, h*0.8);
 		shape = r;
 	} else if(type==TRIANGLE) {
-		float w = ofRandom(20, 42);
+		float w = ofRandom(minSize, maxSize);
 		float h = w*1.73;
 		ofxBox2dPolygon *p = new ofxBox2dPolygon();
-		p->setPhysics(3.0, 0.53, 0.1);
+		p->setPhysics(density, 0.53, 0.1);
 
 		p->addTriangle(ofVec2f(-w, h/2),ofVec2f(w, h/2), ofVec2f(0, -h/2));
 		p->create(getSharedData().box2d->getWorld());
@@ -302,13 +321,13 @@ void CollectingState::addShape(ShapeID type, ofVec2f pos) {
 		shape = p;
 	} else if(type==HEXAGON) {
 		ofVec2f a, b;
-		float h = ofRandom(20, 42);
+		float h = ofRandom(minSize, maxSize);
 		a = b = ofVec2f(h, 0);
 		a.rotate(-30);
 		b.rotate(30);
 		
 		ofxBox2dPolygon *p = new ofxBox2dPolygon();
-		p->setPhysics(3.0, 0.53, 0.1);
+		p->setPhysics(density, 0.53, 0.1);
 		for(int i = 0; i < 6; i++) {
 			p->addTriangle(ofVec2f(0,0),a, b);
 			a.rotate(60);

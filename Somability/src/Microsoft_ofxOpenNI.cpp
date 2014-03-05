@@ -56,7 +56,7 @@ void ofxOpenNI::setup() {
 	bool r = kinect->initSensor();
 	if(!r) ofLogError() << "Couldn't init sensor!";
 
-	r = kinect->initDepthStream(640, 480, true, true);
+	r = kinect->initDepthStream(640, 480, true, false);
 	if(!r) ofLogError() << "Couldn't init depth stream!";
 
 	r = kinect->initColorStream(640, 480, true);
@@ -78,7 +78,6 @@ void ofxOpenNI::update() {
 	kinect->update();
 	users.clear();
 	vector<Skeleton> &skels = kinect->getSkeletons();
-	if(skels.size()) printf("%d  %d\n", ofGetFrameNum(), skels.size());
 	for(int i = 0; i <skels.size(); i++) {
 		users.push_back(ofxOpenNIUser());
 		users.back().init(i, skels[i]);
@@ -127,9 +126,71 @@ void ofxOpenNI::drawSkeletons(float x, float y, float w, float h) {
 
 	int sk = getNumTrackedUsers();
 	for(int i = 0; i < sk; i++) {
-		kinect->drawSkeleton(i);
+		//kinect->drawSkeleton(i);
 	}
+
+
+
+
+
+
+	for(int i = 0; i < sk; i++) {
+		// Iterate through joints
+		for ( Skeleton::iterator it = kinect->getSkeletons()[i].begin(); it != kinect->getSkeletons()[i].end(); ++it ) {
+
+			// Get position and rotation
+			SkeletonBone bone	= it->second;
+
+			ofSetColor(255, 255, 255);
+			ofSetLineWidth(3.0); // fat lines
+			int startJoint = bone.getStartJoint();
+			// do we have a start joint?
+			if ( kinect->getSkeletons()[i].find( ( NUI_SKELETON_POSITION_INDEX ) startJoint ) != kinect->getSkeletons()[i].end() ) 
+			{
+				// draw the line
+				ofLine( bone.getScreenPosition(), kinect->getSkeletons()[i].find( ( NUI_SKELETON_POSITION_INDEX ) startJoint )->second.getScreenPosition() );
+			}
+
+			// Draw joint
+			ofCircle( bone.getScreenPosition(), 3 );
+		}
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	glPopMatrix();
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

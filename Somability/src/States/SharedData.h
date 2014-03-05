@@ -97,14 +97,14 @@ public:
 		// get number of current users
         int numUsers = openNIDevice.getNumTrackedUsers();
 
-		if(numUsers>0) ofBackground(255);
-		else ofBackground(0);
+		//if(numUsers>0) ofBackground(255);
+		//else ofBackground(0);
 		
-		glEnable(GL_BLEND);
+		//glEnable(GL_BLEND);
 		// add the masks together
-		glBlendFunc(GL_ONE, GL_ONE_MINUS_DST_ALPHA);
+		//glBlendFunc(GL_ONE, GL_ONE_MINUS_DST_ALPHA);
 
-        ofSetColor(ofColor::white);
+      //  ofSetColor(ofColor::white);
         
         
 		glPushMatrix();
@@ -120,7 +120,7 @@ public:
 			user.drawMask();
         }
 		glPopMatrix();
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+       // ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofDrawBitmapStringHighlight("Silhouette Display Mode (3 / 4)", 10, ofGetHeight()-10);
     }
 
