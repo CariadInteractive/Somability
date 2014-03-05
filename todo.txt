@@ -1,3 +1,7 @@
+GENERAL
+=======
+- finish windows port
+
 stillness 
 ---------
 make lines change thickness with speed
