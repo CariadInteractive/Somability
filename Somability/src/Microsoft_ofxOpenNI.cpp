@@ -10,14 +10,16 @@ ofxKinectCommonBridge *ofxOpenNI::kinect = NULL;
 void ofxOpenNIUser::init(int i, Skeleton &skel) { 
 	this->skel = skel;
 	index = i;
+	
 }
+
+
 void ofxOpenNIUser::drawMask() {
 	ofxOpenNI::kinect->drawPlayerTextures(0,0,640,480);
 }
 
-
 ofPixels &ofxOpenNIUser::getMaskPixels() {
-	return ofPixels();
+	return ofxOpenNI::kinect->getPlayerPixels(index+1);
 }
 
 

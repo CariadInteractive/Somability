@@ -36,6 +36,7 @@ void TogethernessState::setup() {
 	
 	if(ofFile("micSensitivity.txt").exists()) {
 		sensitivity = ofToInt(ofBufferFromFile("micSensitivity.txt").getText());
+		if(sensitivity==0) sensitivity = 42;
 	}
 	soundStream.setup(0, 2, 44100, 512, 1);
 	soundStream.setInput(this);
@@ -89,26 +90,27 @@ void TogethernessState::update()
 	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
 	greyImg.set(0);
 	unsigned char *pix = greyImg.getPixels();
-	
+	memset(buff, 0, 640*480);
 	for(int i =0 ; i < numUsers; i++) {
 		
 		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
 		unsigned char *c = user.getMaskPixels().getPixels();
 		if(c!=NULL) {
 			int nc = user.getMaskPixels().getNumChannels();
-				printf("%d channels\n", nc);
-			/*
+				//printf("%d channels\n", nc);
+			
 			
 			for(int i = 0; i < 640*480; i++) {
-				buff[i] = (255 - c[i*nc + nc - 1])>127?255:0;
-			}*/
-			greyImg.setFromPixels(buff, 640, 480);
+				buff[i] = (c[i*nc])>0?255:buff[i];
+			}
+			
 		} else {
-			greyImg.set(0);
 			//ofLogError() << "Pixel mask of person is null!";
 		}
+		
 	}
-	
+	greyImg.setFromPixels(buff, 640, 480);
+
 	
 	if(greyImg.getWidth()>0) {
 		contours.findContours(greyImg, 50, 480*480, 20, false);

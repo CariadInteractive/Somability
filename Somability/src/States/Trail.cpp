@@ -49,8 +49,9 @@ void Trail::smoothTrail() {
 	
 void Trail::update(ofVec2f p) {
 	smoothTrail();
-	
-	points.push_back(p);
+	if(p.x!=0 || p.y !=0) {
+		points.push_back(p);
+	}
 	while(points.size()>MAX_LENGTH) {
 		points.pop_front();
 	}

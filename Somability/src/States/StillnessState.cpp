@@ -46,6 +46,9 @@ void StillnessState::update()
 			
 			ofVec3f a = limb.getStartJoint().getProjectivePosition();
 			ofVec3f b = limb.getEndJoint().getProjectivePosition();
+			//if(a.x==0 || a.y==0 || b.x==0 || b.y==0) {
+			//	continue;
+			//}
 			// zero depth
 			a.z = 0;
 			b.z = 0;

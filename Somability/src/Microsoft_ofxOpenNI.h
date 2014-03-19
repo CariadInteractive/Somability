@@ -61,7 +61,7 @@ public:
 	}
 	ofxOpenNIJoint start, end;
 };
-
+class ofxOpenNI;
 class ofxOpenNIUser {
 public:
 	int index;
@@ -77,6 +77,7 @@ public:
 	// some persistence for when passing out object references
 	map<int,ofxOpenNILimb> limbMap;
 	map<int,ofxOpenNIJoint> jointMap;
+
 };
 #define USER_SKELETON_LOST 0
 #define USER_TRACKING_STOPPED 1

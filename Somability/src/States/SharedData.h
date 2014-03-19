@@ -51,11 +51,17 @@ public:
     ofxBox2d *box2d; //	the box2d world
     InteractionDisplayMode theDisplayMode;
     
+	//ofFbo fbo;
+	//ofShader shader;
 public:
 	SharedData() {
 		box2d = new ofxBox2d();
 	}
     void drawCorrectDisplayMode(){
+		//if(fbo.getWidth()==0) {
+			//fbo.allocate(640, 480, GL_RGBA);
+			//shader.load("corrector.vert", "corrector.frag");
+		//}
         switch (theDisplayMode){
             case MIRROR:
                 drawMirrorDisplayMode();
@@ -77,6 +83,7 @@ public:
     
 	
 	void drawMirrorSkeletonDisplayMode() {
+		
 		ofSetColor(ofColor::white);
         openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
         openNIDevice.drawSkeletons(0, 0, ofGetWidth(), ofGetHeight());
@@ -86,9 +93,15 @@ public:
 
     void drawMirrorDisplayMode(){
         ofSetColor(ofColor::white);
+		//fbo.begin();
         openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
-        
-		
+        //fbo.end();
+		//ofSetColor(255);
+		//shader.begin();
+		//shader.setUniformTexture("tex", fbo.getTextureReference(0), 0);
+		//shader.setUniform1f("mode", 0);
+		//fbo.draw(0, 0, 640, 480);
+		//shader.end();
         
         ofDrawBitmapStringHighlight("Mirror Display Mode (1 / 4)", 10, ofGetHeight()-10);
     }

@@ -1,3 +1,5 @@
+- default audio mic sensitivity level.
+
 GENERAL
 =======
 - finish windows port
@@ -18,7 +20,7 @@ make the feedback more visible when touching the shape - maybe make the shape bi
 togetherness
 ------------
 differeny sizes of balls
-
+f
 
 
 
