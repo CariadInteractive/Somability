@@ -74,7 +74,7 @@ void Trail::draw() {
 
 	//glBegin(GL_LINE_STRIP);
 	mesh.clear();
-	
+	ofSetLineWidth(10);
 	deque<ofVec2f>::iterator it;
 	it = points.begin();
 	while(it!=points.end()) {

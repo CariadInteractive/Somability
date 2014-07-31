@@ -79,8 +79,8 @@ void StillnessState::draw()
 	glPushMatrix();
 	
 	
-	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
-			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
+	glScalef((float)WIDTH/getSharedData().openNIDevice.getWidth(),
+			 (float)HEIGHT/getSharedData().openNIDevice.getHeight(),
 			 1);
 	
 			 

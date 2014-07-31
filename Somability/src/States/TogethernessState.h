@@ -61,7 +61,7 @@ public:
 		
 	ofxCvGrayscaleImage greyImg;
 	ofxCvContourFinder contours;
-	ofxBox2dEdge *person;
+	vector<ofxBox2dEdge *> persons;
 	unsigned char *buff;
 	
 	float shootingAngle;

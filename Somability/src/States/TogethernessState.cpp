@@ -31,7 +31,7 @@
  */
 #include "TogethernessState.h"
 void TogethernessState::setup() {
-	person = new ofxBox2dEdge();
+
 	sensitivity = 50;
 	
 	if(ofFile("micSensitivity.txt").exists()) {
@@ -47,8 +47,8 @@ void TogethernessState::setup() {
 	mustFire = false;
 	MAX_SHAPE_AGE = 20;
 
-	greyImg.allocate(640, 480);
-	buff = new unsigned char[640*480];
+	greyImg.allocate(VISION_WIDTH, VISION_HEIGHT);
+	buff = new unsigned char[VISION_WIDTH*VISION_HEIGHT];
 }
 
 void TogethernessState::shoot() {
@@ -56,7 +56,7 @@ void TogethernessState::shoot() {
 	
 	float r = ofRandom(15, 25);
 	c->setPhysics(3.0, 0.53, 0.1);
-	c->setup(getSharedData().box2d->getWorld(), getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight()/2, r);
+	c->setup(getSharedData().box2d->getWorld(), WIDTH, HEIGHT/2, r);
 	ofVec2f v(-20,0);
 	v.rotateRad(shootingAngle);
 	c->setVelocity(v);
@@ -90,7 +90,7 @@ void TogethernessState::update()
 	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
 	greyImg.set(0);
 	unsigned char *pix = greyImg.getPixels();
-	memset(buff, 0, 640*480);
+	memset(buff, 0, VISION_WIDTH*VISION_HEIGHT);
 	for(int i =0 ; i < numUsers; i++) {
 		
 		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
@@ -109,27 +109,41 @@ void TogethernessState::update()
 		}
 		
 	}
-	greyImg.setFromPixels(buff, 640, 480);
+	greyImg.setFromPixels(buff, VISION_WIDTH, VISION_HEIGHT);
 
 	
 	if(greyImg.getWidth()>0) {
-		contours.findContours(greyImg, 50, 480*480, 20, false);
+		contours.findContours(greyImg, 50, VISION_HEIGHT*VISION_HEIGHT, 20, false);
 	}
-	person->clear();
-	if(contours.nBlobs>0) {
-		for(int i = 0; i < contours.blobs[0].nPts; i++) {
-			ofVec3f p = contours.blobs[0].pts[i];
-			p.z = 0;
-			person->addVertex(p);
+
+	// resize persons array
+	while(persons.size() < contours.blobs.size()) {
+		persons.push_back(new ofxBox2dEdge());
+	}
+
+	while(contours.blobs.size() < persons.size()) {
+		delete persons.back();
+		persons.pop_back();
+	}
+	
+	ofVec3f contourScale(WIDTH/(float)greyImg.getWidth(),HEIGHT/(float)greyImg.getHeight());
+	int numBlobs = contours.nBlobs;
+	for(int blob = 0; blob < numBlobs; blob++) {
+		persons[blob]->clear();
+	
+		for(int i = 0; i < contours.blobs[blob].nPts; i++) {
+			ofVec3f p = contours.blobs[blob].pts[i]*contourScale;
+	
+			persons[blob]->addVertex(p);
 		}
-	}
-	person->simplify(5);
+	
+		persons[blob]->simplify(5);
 	//if(person->size()>2) {
-		person->setPhysics(0,0,0);
-		person->create(getSharedData().box2d->getWorld());
-		person->flagHasChanged();
-		person->updateShape();
-	//}
+		persons[blob]->setPhysics(0,0,0);
+		persons[blob]->create(getSharedData().box2d->getWorld());
+		persons[blob]->flagHasChanged();
+		persons[blob]->updateShape();
+	}
 	
 	getSharedData().box2d->update();
     
@@ -155,10 +169,6 @@ void TogethernessState::draw()
 	glPushMatrix();
 	
 	
-	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
-			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
-			 1);
-	
 	ofNoFill();
 	ofSetColor(255);
 	//greyImg.draw(0,0);
@@ -179,14 +189,14 @@ void TogethernessState::draw()
 	}
 	
 	// draw the cannon
-	glPushMatrix();
-	glTranslatef(getSharedData().openNIDevice.getWidth(),getSharedData().openNIDevice.getHeight()/2, 0);
-	glRotatef(ofRadToDeg(shootingAngle),0,0,1);
+	ofPushMatrix();
+	ofTranslate(WIDTH,HEIGHT/2, 0);
+	ofRotate(ofRadToDeg(shootingAngle),0,0,1);
 	ofSetColor(255);
 	ofRect(30, -20, -100, 40);
-	glPopMatrix();
-	//contours.draw();
-	glPopMatrix();
+	ofPopMatrix();
+	// contours.draw();
+
 	ofSetColor(255);
 	ofDrawBitmapString("Use the up and down arrow keys to change audio sensitivity ("+ofToString(sensitivity)+" / 100)", 5, 60);
 

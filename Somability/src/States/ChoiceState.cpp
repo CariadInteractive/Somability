@@ -30,6 +30,7 @@
  *
  */
 #include "ChoiceState.h"
+#include "constants.h"
 
 void ChoiceState::update()
 {
@@ -42,8 +43,8 @@ void ChoiceState::draw()
 {
     ofPushStyle(); //be polite
     
-    float halfWindowWidth = ofGetWidth()/2.f;
-    float halfWindowHeight = ofGetHeight()/2.f;
+    float halfWindowWidth = WIDTH/2.f;
+    float halfWindowHeight = HEIGHT/2.f;
     
     ofRectangle topLeft = ofRectangle(0,0,halfWindowWidth, halfWindowHeight);
     ofRectangle topRight = ofRectangle(halfWindowWidth,0,halfWindowWidth, halfWindowHeight);
@@ -65,7 +66,7 @@ void ChoiceState::draw()
     getSharedData().font.drawString("Stillness", topRight.getCenter().x, topRight.getCenter().y);
     getSharedData().font.drawString("Togetherness", bottomLeft.getCenter().x, bottomLeft.getCenter().y);
     getSharedData().font.drawString("Collecting", bottomRight.getCenter().x, bottomRight.getCenter().y);
-	getSharedData().font.drawString("Click a Choice, click any time to return to this screen", 10.f, ofGetHeight()/2.f);
+	getSharedData().font.drawString("Click a Choice, click any time to return to this screen", 10.f, HEIGHT/2.f);
     ofPopStyle();
 }
 
@@ -76,14 +77,15 @@ string ChoiceState::getName()
 
 void ChoiceState::mousePressed(int x, int y, int button)
 {
-	if(y < (ofGetHeight()/2.f)){
-        if(x < (ofGetWidth()/2.f)){
+	
+	if(y < (HEIGHT/2.f)){
+        if(x < (WIDTH/2.f)){
             changeState("rhythm");
         }else{
             changeState("stillness");
         }
     }else{
-        if(x < (ofGetWidth()/2.f)){
+        if(x < (WIDTH/2.f)){
             changeState("togetherness");
         }else{
             changeState("collecting");

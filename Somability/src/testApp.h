@@ -9,6 +9,7 @@
 #include "StillnessState.h"
 #include "TogethernessState.h"
 #include "CollectingState.h"
+#include "Centerer.h"
 
 class testApp : public ofBaseApp{
 
@@ -31,5 +32,6 @@ public:
     void drawKinectDebug(); //just draws more information about the Kinect    
 private:
     itg::ofxStateMachine<SharedData> stateMachine;
-		
+	Centerer centerer;
+
 };

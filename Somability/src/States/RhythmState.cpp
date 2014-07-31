@@ -74,11 +74,11 @@ void RhythmState::draw()
 {
 	getSharedData().drawCorrectDisplayMode();
     
-	glPushMatrix();
+	ofPushMatrix();
 	
 	
-	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
-			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
+	ofScale((float)WIDTH/getSharedData().openNIDevice.getWidth(),
+			 (float)HEIGHT/getSharedData().openNIDevice.getHeight(),
 			 1);
 
 	
@@ -96,7 +96,7 @@ void RhythmState::draw()
 		}
 	}
 	
-	glPopMatrix();
+	ofPopMatrix();
 }
 
 void RhythmState::trigger(ofVec2f p) {

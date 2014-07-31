@@ -225,6 +225,8 @@ xcopy /e /i /y "..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\li
     <ClInclude Include="..\..\..\addons\ofxOpenCv\src\ofxCvMain.h" />
     <ClInclude Include="..\..\..\addons\ofxOpenCv\src\ofxCvShortImage.h" />
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
+    <ClInclude Include="src\Centerer.h" />
+    <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\Microsoft_ofxOpenNI.h" />
     <ClInclude Include="src\States\ChoiceState.h" />
     <ClInclude Include="src\States\CollectingState.h" />

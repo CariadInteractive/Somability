@@ -1,7 +1,13 @@
 #include "testApp.h"
+#include "constants.h"
+
+
+int WIDTH  = 1024;
+int HEIGHT = 768; 
 
 //--------------------------------------------------------------
 void testApp::setup() {
+	centerer.setup(WIDTH, HEIGHT);
     ofSetCircleResolution(80);
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetFrameRate(30);
@@ -34,10 +40,10 @@ void testApp::setup() {
     //now do box2D
 	stateMachine.getSharedData().box2d->init();
 	stateMachine.getSharedData().box2d->setGravity(0, 10);
-	stateMachine.getSharedData().box2d->createBounds(0,0,640, 480);
+	stateMachine.getSharedData().box2d->createBounds(0,0,WIDTH, HEIGHT);
 	stateMachine.getSharedData().box2d->setFPS(30.0);
 	//stateMachine.getSharedData().box2d.registerGrabbing();
-	
+		
 	// initialise state machine
 	stateMachine.addState<ChoiceState>();
 	stateMachine.addState<RhythmState>();
@@ -47,11 +53,15 @@ void testApp::setup() {
 	stateMachine.changeState("choice");
     
     stateMachine.getSharedData().theDisplayMode = MIRROR; //default to mirror mode
+	stateMachine.disableAppEvents();
+	stateMachine.disableMouseEvents();
+
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     stateMachine.getSharedData().openNIDevice.update();
+	stateMachine.update();
 }
 
 void testApp::drawKinectDebug(){
@@ -121,6 +131,10 @@ void testApp::drawKinectDebug(){
 void testApp::draw(){
 //	ofSetColor(255);
 //	stateMachine.getSharedData().openNIDevice.drawMask();
+	ofBackground(0);
+	centerer.begin();
+	stateMachine.draw();
+	centerer.end();
 }
 
 //--------------------------------------------------------------
@@ -158,22 +172,38 @@ void testApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
-    
+	ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	centerer.transformMouse(m);
+	stateMachine.onMouseMoved(m);
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-    
+    ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	centerer.transformMouse(m);
+	stateMachine.onMouseDragged(m);
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    
+    ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	centerer.transformMouse(m);
+	stateMachine.onMousePressed(m);
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-    
+    ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	centerer.transformMouse(m);
+	stateMachine.onMouseReleased(m);
 }
 
 //--------------------------------------------------------------

@@ -30,6 +30,7 @@
  *
  */
 #include "CollectingState.h"
+#include "constants.h"
 
 #define MAX_SHAPE_AGE 20
 
@@ -144,10 +145,10 @@ void CollectingState::draw()
     getSharedData().drawCorrectDisplayMode();
 	
 	
-	glPushMatrix();
+	ofPushMatrix();
 	
-	glScalef((float)ofGetWidth()/getSharedData().openNIDevice.getWidth(),
-			 (float)ofGetHeight()/getSharedData().openNIDevice.getHeight(),
+	ofScale((float)WIDTH/getSharedData().openNIDevice.getWidth(),
+			 (float)HEIGHT/getSharedData().openNIDevice.getHeight(),
 			 1);
 
 
@@ -181,7 +182,7 @@ void CollectingState::draw()
 	}
 	
 	
-	glPopMatrix();
+	ofPopMatrix();
 }
 void CollectingState::drawShape(int shapeId, ofRectangle &rect) {
 	switch(shapeId) {
@@ -209,8 +210,8 @@ void CollectingState::drawShape(int shapeId, ofRectangle &rect) {
 				break;
 			case HEXAGON:
 			{
-				glPushMatrix();
-				glTranslatef(rect.getCenter().x, rect.getCenter().y, 0);
+				ofPushMatrix();
+				ofTranslate(rect.getCenter().x, rect.getCenter().y, 0);
 				ofBeginShape();
 				ofVec2f v(rect.width/2, 0);
 				for(int i = 0; i < 6; i++) {
@@ -219,7 +220,7 @@ void CollectingState::drawShape(int shapeId, ofRectangle &rect) {
 				}
 				ofEndShape();
 				
-				glPopMatrix();
+				ofPopMatrix();
 			}
 				break;
 		}
@@ -234,7 +235,7 @@ void CollectingState::keyPressed(int k) {
 
 	ofVec2f m(ofGetMouseX(), ofGetMouseY());
 	ofVec2f x(getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight());
-	ofVec2f s(ofGetWidth(), ofGetHeight());
+	ofVec2f s(WIDTH, HEIGHT);
 	
 	m = m*x/s;
 	
@@ -252,7 +253,7 @@ void CollectingState::keyPressed(int k) {
 }
 
 void CollectingState::mouseMoved(int x, int y) {
-	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+	ofVec2f m(x,y);
 	ofVec2f k(getSharedData().openNIDevice.getWidth(), getSharedData().openNIDevice.getHeight());
 	ofVec2f s(ofGetWidth(), ofGetHeight());
 	

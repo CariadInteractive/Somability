@@ -1,6 +1,6 @@
 #ifdef _WIN32
 #include "Microsoft_ofxOpenNI.h"
-
+#include "constants.h"
 
 ofxKinectCommonBridge *ofxOpenNI::kinect = NULL;
 
@@ -15,7 +15,7 @@ void ofxOpenNIUser::init(int i, Skeleton &skel) {
 
 
 void ofxOpenNIUser::drawMask() {
-	ofxOpenNI::kinect->drawPlayerTextures(0,0,640,480);
+	ofxOpenNI::kinect->drawPlayerTextures(0,0,WIDTH,HEIGHT);
 }
 
 ofPixels &ofxOpenNIUser::getMaskPixels() {
@@ -66,7 +66,6 @@ void ofxOpenNI::setup() {
 
 	r = kinect->initSkeletonStream(false);
 	if(!r) ofLogError() << "Couldn't init skeleton stream!";
-
 	r = kinect->start();
 	if(!r) ofLogError() << "Couldn't start kinect!";
 	
@@ -94,15 +93,15 @@ void ofxOpenNI::stop() {
 
 
 void ofxOpenNI::drawDebug() {
-	glPushMatrix();
-	glScalef(ofGetWidth()/getWidth(), ofGetHeight()/getHeight(), 1);
+	ofPushMatrix();
+	ofScale(WIDTH/getWidth(), HEIGHT/getHeight(), 1);
 
-	kinect->drawDepth(0, 0, getWidth(), getHeight());
+	kinect->drawDepth(0, 0, WIDTH, HEIGHT);
 	int sk = getNumTrackedUsers();
 	for(int i = 0; i < sk; i++) {
 		kinect->drawSkeleton(i);
 	}
-	glPopMatrix();
+	ofPopMatrix();
 }
 
 
@@ -123,13 +122,10 @@ void ofxOpenNI::drawImage(float x, float y, float w, float h) {
 
 
 void ofxOpenNI::drawSkeletons(float x, float y, float w, float h) {
-	glPushMatrix();
-	glScalef(ofGetWidth()/getWidth(), ofGetHeight()/getHeight(), 1);
+	ofPushMatrix();
+	ofScale(w/getWidth(), h/getHeight(), 1);
 
 	int sk = getNumTrackedUsers();
-	for(int i = 0; i < sk; i++) {
-		//kinect->drawSkeleton(i);
-	}
 
 
 
@@ -159,56 +155,23 @@ void ofxOpenNI::drawSkeletons(float x, float y, float w, float h) {
 	}
 	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	glPopMatrix();
-
-
-
-
-
-
-
-
-
-
-
+	ofPopMatrix();
 }
 
 
 	
 void ofxOpenNI::drawMask() {
-	kinect->drawPlayerTextures(0,0,640,480);
+	kinect->drawPlayerTextures(0,0,VISION_WIDTH, VISION_HEIGHT);
 }
 
 
 float ofxOpenNI::getWidth() {
-	return 640;
+	return VISION_WIDTH;
 }
 
 
 float ofxOpenNI::getHeight() {
-	return 480;
+	return VISION_HEIGHT;
 }
 
 

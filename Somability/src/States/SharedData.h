@@ -37,6 +37,7 @@
 #include "ofxOpenNI.h"
 #endif
 #include "ofxBox2d.h"
+#include "constants.h"
 
 //enums http://www.cplusplus.com/doc/tutorial/other_data_types/
 enum InteractionDisplayMode { MIRROR, MIRROR_SKELETON, SILHOUETTE, INVISIBLE};
@@ -58,10 +59,7 @@ public:
 		box2d = new ofxBox2d();
 	}
     void drawCorrectDisplayMode(){
-		//if(fbo.getWidth()==0) {
-			//fbo.allocate(640, 480, GL_RGBA);
-			//shader.load("corrector.vert", "corrector.frag");
-		//}
+		
         switch (theDisplayMode){
             case MIRROR:
                 drawMirrorDisplayMode();
@@ -85,43 +83,25 @@ public:
 	void drawMirrorSkeletonDisplayMode() {
 		
 		ofSetColor(ofColor::white);
-        openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
-        openNIDevice.drawSkeletons(0, 0, ofGetWidth(), ofGetHeight());
+        openNIDevice.drawImage(0, 0, WIDTH,HEIGHT);
+        openNIDevice.drawSkeletons(0, 0, WIDTH, HEIGHT);
 		
-		 ofDrawBitmapStringHighlight("Mirror + Skeletons Display Mode (2 / 4)", 10, ofGetHeight()-10);
+		 ofDrawBitmapStringHighlight("Mirror + Skeletons Display Mode (2 / 4)", 10, HEIGHT-10);
 	}
 
     void drawMirrorDisplayMode(){
         ofSetColor(ofColor::white);
-		//fbo.begin();
-        openNIDevice.drawImage(0, 0, ofGetWidth(), ofGetHeight());
-        //fbo.end();
-		//ofSetColor(255);
-		//shader.begin();
-		//shader.setUniformTexture("tex", fbo.getTextureReference(0), 0);
-		//shader.setUniform1f("mode", 0);
-		//fbo.draw(0, 0, 640, 480);
-		//shader.end();
+		
+        openNIDevice.drawImage(0, 0, WIDTH,HEIGHT);
         
-        ofDrawBitmapStringHighlight("Mirror Display Mode (1 / 4)", 10, ofGetHeight()-10);
+        ofDrawBitmapStringHighlight("Mirror Display Mode (1 / 4)", 10, HEIGHT-10);
     }
 
     void drawSilhouetteDisplayMode(){
 		// get number of current users
         int numUsers = openNIDevice.getNumTrackedUsers();
 
-		//if(numUsers>0) ofBackground(255);
-		//else ofBackground(0);
-		
-		//glEnable(GL_BLEND);
-		// add the masks together
-		//glBlendFunc(GL_ONE, GL_ONE_MINUS_DST_ALPHA);
-
-      //  ofSetColor(ofColor::white);
         
-        
-		glPushMatrix();
-		glScalef(ofGetWidth()/openNIDevice.getWidth(), ofGetHeight()/openNIDevice.getHeight(), 1);
         // iterate through users
         for (int i = 0; i < numUsers; i++){
             
@@ -132,13 +112,11 @@ public:
             // user.drawSkeleton();
 			user.drawMask();
         }
-		glPopMatrix();
-       // ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        ofDrawBitmapStringHighlight("Silhouette Display Mode (3 / 4)", 10, ofGetHeight()-10);
+        ofDrawBitmapStringHighlight("Silhouette Display Mode (3 / 4)", 10, HEIGHT-10);
     }
 
     void drawInvisibleDisplayMode(){
         //nothing as yet... (-;
-        ofDrawBitmapStringHighlight("Invisible Display Mode (4 / 4)", 10, ofGetHeight()-10);
+        ofDrawBitmapStringHighlight("Invisible Display Mode (4 / 4)", 10, HEIGHT-10);
     }
 };
