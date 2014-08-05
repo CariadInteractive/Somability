@@ -31,11 +31,10 @@
  */
 #pragma once
 
-#include "ofxState.h"
-#include "SharedData.h"
+#include "SomabilityApp.h"
 #include "Trail.h"
 
-class StillnessState : public itg::ofxState<SharedData>
+class StillnessState : public SomabilityApp
 {
 public:
 	void update();

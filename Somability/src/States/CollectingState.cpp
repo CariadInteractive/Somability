@@ -32,6 +32,8 @@
 #include "CollectingState.h"
 #include "constants.h"
 
+
+
 #define MAX_SHAPE_AGE 20
 
 
@@ -41,14 +43,14 @@ void CollectingState::setup() {
 	handTouching[RIGHT_HAND] = NO_SHAPE;
 	
 	// y position of the triggers, 2/9ths down the screen
-	float yy = getSharedData().openNIDevice.getHeight()*2.f/9.f;
+	float yy = HEIGHT*2.f/9.f;
 	
 	for(int i = 0; i < NUM_SHAPES; i++) {
 		
-		float xpos = ofMap(i, -1, NUM_SHAPES, 0, getSharedData().openNIDevice.getWidth());
+		float xpos = ofMap(i, -1, NUM_SHAPES, 0, WIDTH);
 //		ofLine(xpos, 0, xpos, 480);
 		ofRectangle r;
-		float w = getSharedData().openNIDevice.getWidth()/7.f;
+		float w = WIDTH/7.f;
 		r.setFromCenter(xpos, yy, w, w);
 		triggers.push_back(make_pair((ShapeID)i, r));
 	}
@@ -66,14 +68,17 @@ void CollectingState::update()
 {
 	
 	int numUsers = getSharedData().openNIDevice.getNumTrackedUsers();
+	// FIX THIS
+	
+	ofVec2f skelScale(WIDTH/getSharedData().openNIDevice.getWidth(), HEIGHT/getSharedData().openNIDevice.getHeight());
 	for(int i = 0; i < numUsers; i++) {
 	
 		ofxOpenNIUser &user = getSharedData().openNIDevice.getTrackedUser(i);
 		ofxOpenNIJoint &j1 = user.getJoint(JOINT_LEFT_HAND);
 		ofxOpenNIJoint &j2 = user.getJoint(JOINT_RIGHT_HAND);
 		
-		ofVec2f ap = j1.getProjectivePosition();
-		ofVec2f bp = j2.getProjectivePosition();
+		ofVec2f ap = j1.getProjectivePosition()*skelScale;
+		ofVec2f bp = j2.getProjectivePosition()*skelScale;
 
 		if(ap.x!=0) handMoved(ap, LEFT_HAND);
 		if(bp.x!=0) handMoved(bp, RIGHT_HAND);
@@ -86,10 +91,10 @@ void CollectingState::update()
     getSharedData().box2d->update();
 	if(ofGetFrameNum()%10==0) {
 		if(handTouching[LEFT_HAND]!=NO_SHAPE) {
-			addShape(handTouching[LEFT_HAND], ofVec2f(ofRandom(0, getSharedData().openNIDevice.getWidth()), 1));
+			addShape(handTouching[LEFT_HAND], ofVec2f(ofRandom(0, WIDTH), 1));
 		}
 		if(handTouching[RIGHT_HAND]!=NO_SHAPE) {
-			addShape(handTouching[RIGHT_HAND], ofVec2f(ofRandom(0, getSharedData().openNIDevice.getWidth()), 1));
+			addShape(handTouching[RIGHT_HAND], ofVec2f(ofRandom(0, WIDTH), 1));
 		}
 	}
     // remove shapes offscreen
@@ -145,11 +150,6 @@ void CollectingState::draw()
     getSharedData().drawCorrectDisplayMode();
 	
 	
-	ofPushMatrix();
-	
-	ofScale((float)WIDTH/getSharedData().openNIDevice.getWidth(),
-			 (float)HEIGHT/getSharedData().openNIDevice.getHeight(),
-			 1);
 
 
 	ofFill();
@@ -180,9 +180,6 @@ void CollectingState::draw()
 		setColorForShape(triggers[i].first);
 		drawShape(triggers[i].first, triggers[i].second);
 	}
-	
-	
-	ofPopMatrix();
 }
 void CollectingState::drawShape(int shapeId, ofRectangle &rect) {
 	switch(shapeId) {

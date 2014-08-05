@@ -270,6 +270,55 @@
     <ClCompile Include="src\States\Trail.cpp">
       <Filter>states</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\Parameterized.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\SimpleGui.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatMapper.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\LabeledControl.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Multiball.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Slider.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\TextField.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Editor.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Inspector.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Container.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Control.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Controls.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Gui.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Instantiator.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\ofGuiEventDispatcher.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Resources.cpp">
+      <Filter>ofxXmlGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SomabilityGui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\States\SharedData.h" />
@@ -852,6 +901,178 @@
     </ClInclude>
     <ClInclude Include="src\Centerer.h" />
     <ClInclude Include="src\constants.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\ofxXmlGui.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\appearance\bitmapTextures.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\Parameterized.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\ParameterizedGui.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\SimpleGui.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\TabbedGui.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Contour.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\DoubleField.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Drawable.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FileField.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatColorPicker.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatField.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatMapper.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FPSCounter.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Graph.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Grid.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\HexColorPicker.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\HorizontalRule.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\IntField.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\IntSlider.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Keyboard.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Knob.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\LabeledControl.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\List.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Menu.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\MenuBar.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\MenuItem.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Meter.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\MicroButton.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Multiball.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Pane.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Panner.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\PushButton.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\RangeSlider.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\SectionToggle.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\SegmentedControl.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Slider.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Slider2D.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\SliderBank.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Text.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\TextField.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Title.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Toggle.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\VU.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Editor.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Inspector.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Container.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Control.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Event.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\GridSequence.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Gui.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Instantiator.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Listener.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\ofGuiEventDispatcher.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\ParameterInfo.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Resources.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\textfield\TextFieldFontRenderer.h">
+      <Filter>ofxXmlGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SomabilityApp.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
@@ -865,6 +1086,9 @@
     </Filter>
     <Filter Include="kinect">
       <UniqueIdentifier>{64282abb-71cd-437f-8d5a-512a3bfbf641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ofxXmlGui">
+      <UniqueIdentifier>{91ad9b26-6c5c-405e-b4f9-b1bc588243c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

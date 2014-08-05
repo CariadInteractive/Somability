@@ -43,14 +43,14 @@
     <TargetName>$(ProjectName)_debug</TargetName>
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
-    <IncludePath>$(KINECT_TOOLKIT_DIR)inc;$(KINECTSDK10_DIR)inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(KINECT_TOOLKIT_DIR)inc;..\..\..\addons\ofxXmlGui\src\xmlgui\editor;..\..\..\addons\ofxXmlGui\src\xmlgui\controls;..\..\..\addons\ofxXmlGui\src\xmlgui\container;..\..\..\addons\ofxXmlGui\src\xmlgui\appearance;..\..\..\addons\ofxXmlGui\src\xmlgui\framework;..\..\..\addons\ofxXmlGui\src\;$(KINECTSDK10_DIR)inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(KINECTSDK10_DIR)\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>bin\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(KINECT_TOOLKIT_DIR)inc;$(KINECTSDK10_DIR)inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(KINECT_TOOLKIT_DIR)inc;..\..\..\addons\ofxXmlGui\src\xmlgui\editor;..\..\..\addons\ofxXmlGui\src\xmlgui\controls;..\..\..\addons\ofxXmlGui\src\xmlgui\container;..\..\..\addons\ofxXmlGui\src\xmlgui\appearance;..\..\..\addons\ofxXmlGui\src\xmlgui\framework;..\..\..\addons\ofxXmlGui\src\;$(KINECTSDK10_DIR)inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(KINECTSDK10_DIR)\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -120,8 +120,25 @@ xcopy /e /i /y "..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\li
     <ClCompile Include="..\..\..\addons\ofxOpenCv\src\ofxCvShortImage.cpp" />
     <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix\NetworkingUtils.cpp" />
     <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtilsWin.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\Parameterized.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\SimpleGui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatMapper.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\LabeledControl.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Multiball.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Slider.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\TextField.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Editor.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Inspector.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Container.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Control.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Controls.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Gui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Instantiator.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\ofGuiEventDispatcher.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Resources.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Microsoft_ofxOpenNI.cpp" />
+    <ClCompile Include="src\SomabilityGui.cpp" />
     <ClCompile Include="src\States\ChoiceState.cpp" />
     <ClCompile Include="src\States\CollectingState.cpp" />
     <ClCompile Include="src\States\RhythmState.cpp" />
@@ -225,9 +242,67 @@ xcopy /e /i /y "..\..\..\addons\ofxKinectCommonBridge\libs\KinectCommonBridge\li
     <ClInclude Include="..\..\..\addons\ofxOpenCv\src\ofxCvMain.h" />
     <ClInclude Include="..\..\..\addons\ofxOpenCv\src\ofxCvShortImage.h" />
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\ofxXmlGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\appearance\bitmapTextures.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\Parameterized.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\ParameterizedGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\SimpleGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\container\TabbedGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Contour.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\DoubleField.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Drawable.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FileField.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatColorPicker.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatField.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FloatMapper.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\FPSCounter.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Graph.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Grid.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\HexColorPicker.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\HorizontalRule.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\IntField.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\IntSlider.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Keyboard.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Knob.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\LabeledControl.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\List.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Menu.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\MenuBar.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\MenuItem.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Meter.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\MicroButton.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Multiball.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Pane.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Panner.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\PushButton.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\RangeSlider.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\SectionToggle.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\SegmentedControl.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Slider.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Slider2D.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\SliderBank.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Text.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\TextField.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Title.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\Toggle.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\controls\VU.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Editor.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\editor\Inspector.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Container.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Control.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Event.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\GridSequence.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Gui.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Instantiator.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Listener.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\ofGuiEventDispatcher.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\ParameterInfo.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\framework\Resources.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlGui\src\xmlgui\textfield\TextFieldFontRenderer.h" />
     <ClInclude Include="src\Centerer.h" />
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\Microsoft_ofxOpenNI.h" />
+    <ClInclude Include="src\SomabilityApp.h" />
     <ClInclude Include="src\States\ChoiceState.h" />
     <ClInclude Include="src\States\CollectingState.h" />
     <ClInclude Include="src\States\Ding.h" />

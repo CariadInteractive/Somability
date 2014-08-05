@@ -31,8 +31,7 @@
  */
 #pragma once
 
-#include "ofxState.h"
-#include "SharedData.h"
+#include "SomabilityApp.h"
 #include "Ding.h"
 
 class Feet {
@@ -81,7 +80,7 @@ public:
 	}
 };
 
-class RhythmState : public itg::ofxState<SharedData>
+class RhythmState : public SomabilityApp
 {
 public:
 	void setup();

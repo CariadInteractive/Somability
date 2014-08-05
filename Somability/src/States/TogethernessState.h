@@ -31,11 +31,10 @@
  */
 #pragma once
 
-#include "ofxState.h"
-#include "SharedData.h"
+#include "SomabilityApp.h"
 #include "ofxOpenCv.h"
 
-class TogethernessState : public itg::ofxState<SharedData>, public ofBaseSoundInput
+class TogethernessState : public SomabilityApp, public ofBaseSoundInput
 {
 public:
 	

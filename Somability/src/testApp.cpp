@@ -1,10 +1,12 @@
 #include "testApp.h"
 #include "constants.h"
-
+#include "SomabilityGui.h"
 
 int WIDTH  = 1024;
 int HEIGHT = 768; 
 
+
+SomabilityGui gui;
 //--------------------------------------------------------------
 void testApp::setup() {
 	centerer.setup(WIDTH, HEIGHT);
@@ -51,10 +53,11 @@ void testApp::setup() {
 	stateMachine.addState<TogethernessState>();
     stateMachine.addState<CollectingState>();
 	stateMachine.changeState("choice");
-    
+	stateMachine.getSharedData().gui = &gui;
     stateMachine.getSharedData().theDisplayMode = MIRROR; //default to mirror mode
 	stateMachine.disableAppEvents();
 	stateMachine.disableMouseEvents();
+	gui.gui.addTitle("hello");
 
 }
 
@@ -134,6 +137,7 @@ void testApp::draw(){
 	ofBackground(0);
 	centerer.begin();
 	stateMachine.draw();
+	gui.draw();
 	centerer.end();
 }
 
@@ -160,6 +164,9 @@ void testApp::keyPressed(int key){
         case '4':
             stateMachine.getSharedData().theDisplayMode = INVISIBLE;
             break;
+		case ' ':
+			gui.toggle();
+			break;
         default:
             break;
     }
@@ -177,6 +184,7 @@ void testApp::mouseMoved(int x, int y ){
 	m.y = y;
 	centerer.transformMouse(m);
 	stateMachine.onMouseMoved(m);
+	gui.mouseMoved(m);
 }
 
 //--------------------------------------------------------------
@@ -186,6 +194,7 @@ void testApp::mouseDragged(int x, int y, int button){
 	m.y = y;
 	centerer.transformMouse(m);
 	stateMachine.onMouseDragged(m);
+	gui.mouseDragged(m);
 }
 
 //--------------------------------------------------------------
@@ -195,6 +204,7 @@ void testApp::mousePressed(int x, int y, int button){
 	m.y = y;
 	centerer.transformMouse(m);
 	stateMachine.onMousePressed(m);
+	gui.mousePressed(m);
 }
 
 //--------------------------------------------------------------
@@ -204,6 +214,7 @@ void testApp::mouseReleased(int x, int y, int button){
 	m.y = y;
 	centerer.transformMouse(m);
 	stateMachine.onMouseReleased(m);
+	gui.mouseReleased(m);
 }
 
 //--------------------------------------------------------------

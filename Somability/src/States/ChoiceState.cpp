@@ -75,6 +75,8 @@ string ChoiceState::getName()
 	return "choice";
 }
 
+
+
 void ChoiceState::mousePressed(int x, int y, int button)
 {
 	

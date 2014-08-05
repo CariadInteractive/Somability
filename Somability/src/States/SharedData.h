@@ -38,6 +38,7 @@
 #endif
 #include "ofxBox2d.h"
 #include "constants.h"
+#include "SomabilityGui.h"
 
 //enums http://www.cplusplus.com/doc/tutorial/other_data_types/
 enum InteractionDisplayMode { MIRROR, MIRROR_SKELETON, SILHOUETTE, INVISIBLE};
@@ -51,12 +52,14 @@ public:
     ofTrueTypeFont font;
     ofxBox2d *box2d; //	the box2d world
     InteractionDisplayMode theDisplayMode;
+	SomabilityGui *gui;
     
 	//ofFbo fbo;
 	//ofShader shader;
 public:
 	SharedData() {
-		box2d = new ofxBox2d();
+		box2d = new ofxBox2d(); 
+		gui = NULL;
 	}
     void drawCorrectDisplayMode(){
 		

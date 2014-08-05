@@ -33,7 +33,7 @@
 
 #include "ofxState.h"
 #include "SharedData.h"
-
+#include "Icon.h"
 class ChoiceState : public itg::ofxState<SharedData>
 {
 public:
@@ -42,4 +42,9 @@ public:
 	void mousePressed(int x, int y, int button);
 	string getName();
 	void stateEnter();
+	
+	
+	ofImage logo;
+
+	vector<Icon*> icons;
 };

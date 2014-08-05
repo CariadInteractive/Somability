@@ -31,10 +31,9 @@
  */
 #pragma once
 
-#include "ofxState.h"
-#include "SharedData.h"
+#include "SomabilityApp.h"
 
-class CollectingState : public itg::ofxState<SharedData>
+class CollectingState : public SomabilityApp
 {
 public:
 	void setup();
