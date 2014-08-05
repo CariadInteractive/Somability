@@ -32,42 +32,38 @@
 #include "ChoiceState.h"
 #include "constants.h"
 
+void ChoiceState::setupGui(SomabilityGui *gui) {
+}
+
+ChoiceState::ChoiceState() {
+	logo.loadImage("img/logo.png");
+	logo.setAnchorPercent(0.5, 0.5); 
+	float h = HEIGHT * 0.65;
+	icons.push_back(new Icon("reach", WIDTH/2 - 300, h));
+	icons.push_back(new Icon("flow", WIDTH/2, h));
+	icons.push_back(new Icon("balance", WIDTH/2 + 300, h));
+}
+
 void ChoiceState::update()
 {
 }
 
 void ChoiceState::stateEnter() {
+	SomabilityApp::stateEnter();
 	ofSetWindowTitle(getName());
+	for(int i = 0; i < icons.size(); i++) {
+		icons[i]->down = false;
+		icons[i]->over = false;
+	}
 }
 void ChoiceState::draw()
 {
-    ofPushStyle(); //be polite
-    
-    float halfWindowWidth = WIDTH/2.f;
-    float halfWindowHeight = HEIGHT/2.f;
-    
-    ofRectangle topLeft = ofRectangle(0,0,halfWindowWidth, halfWindowHeight);
-    ofRectangle topRight = ofRectangle(halfWindowWidth,0,halfWindowWidth, halfWindowHeight);
-    ofRectangle bottomLeft = ofRectangle(0,halfWindowHeight,halfWindowWidth, halfWindowHeight);
-    ofRectangle bottomRight = ofRectangle(halfWindowWidth,halfWindowHeight,halfWindowWidth, halfWindowHeight);
-    
-    ofFill();
-    ofSetColor(ofColor::red);
-    ofRect(topLeft);
-    ofSetColor(ofColor::green);
-    ofRect(topRight);
-    ofSetColor(ofColor::blue);
-    ofRect(bottomLeft);
-    ofSetColor(ofColor::yellow);
-    ofRect(bottomRight);
-    
-    ofSetColor(ofColor::black);
-    getSharedData().font.drawString("Rhythm", topLeft.getCenter().x, topLeft.getCenter().y);
-    getSharedData().font.drawString("Stillness", topRight.getCenter().x, topRight.getCenter().y);
-    getSharedData().font.drawString("Togetherness", bottomLeft.getCenter().x, bottomLeft.getCenter().y);
-    getSharedData().font.drawString("Collecting", bottomRight.getCenter().x, bottomRight.getCenter().y);
-	getSharedData().font.drawString("Click a Choice, click any time to return to this screen", 10.f, HEIGHT/2.f);
-    ofPopStyle();
+   ofSetColor(255);
+    logo.draw(WIDTH/2, HEIGHT/4);
+
+	for(int i = 0; i < icons.size(); i++) {
+		icons[i]->draw();
+	}
 }
 
 string ChoiceState::getName()
@@ -77,22 +73,57 @@ string ChoiceState::getName()
 
 
 
+void ChoiceState::mouseMoved(int x, int y, int button)
+{
+	ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	m.button = button;
+
+	for(int i = 0; i < icons.size(); i++) {
+		icons[i]->mouseMoved(m);
+	}
+}
+
 void ChoiceState::mousePressed(int x, int y, int button)
 {
-	
-	if(y < (HEIGHT/2.f)){
-        if(x < (WIDTH/2.f)){
-            changeState("rhythm");
-        }else{
-            changeState("stillness");
-        }
-    }else{
-        if(x < (WIDTH/2.f)){
-            changeState("togetherness");
-        }else{
-            changeState("collecting");
-        }
-    }
-    
-    
+	ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	m.button = button;
+
+	for(int i = 0; i < icons.size(); i++) {
+		icons[i]->mousePressed(m);
+	}
 }
+
+void ChoiceState::mouseDragged(int x, int y, int button)
+{
+	ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	m.button = button;
+
+	for(int i = 0; i < icons.size(); i++) {
+		icons[i]->mouseDragged(m);
+	}
+}
+
+void ChoiceState::mouseReleased(int x, int y, int button)
+{
+	ofMouseEventArgs m;
+	m.x = x;
+	m.y = y;
+	m.button = button;
+	string launchApp = "";
+	for(int i = 0; i < icons.size(); i++) {
+		if(icons[i]->mouseReleased(m)) {
+			launchApp = icons[i]->appName;
+		}
+	}
+	if(launchApp!="") {
+		changeState(launchApp);
+	}
+}
+
+

@@ -1,5 +1,5 @@
 /*
- *  ChoiceState.h
+ *  ReachState.h
  *
  *  based on GreenState.h Copyright (c) 2011, Neil Mendoza, http://www.neilmendoza.com
  *  All rights reserved. 
@@ -31,29 +31,62 @@
  */
 #pragma once
 
-#include "ofxState.h"
-#include "SharedData.h"
-#include "Icon.h"
 #include "SomabilityApp.h"
 
-class ChoiceState : public SomabilityApp
+class ReachState : public SomabilityApp
 {
 public:
-	ChoiceState();
-	void setupGui(SomabilityGui *gui);
-
+	void setup();
 	void update();
 	void draw();
-	void mouseMoved(int x, int y, int button);
-	void mousePressed(int x, int y, int button);
-	void mouseDragged(int x, int y, int button);
+    void keyPressed(int key);
+	void setupGui(SomabilityGui *gui);
+
 	void mouseReleased(int x, int y, int button);
-
 	string getName();
-	void stateEnter();
-	
-	
-	ofImage logo;
+    vector    <ofPtr<ofxBox2dBaseShape> >	shapes;		  //	default box2d circles
+	void drawShape(int shapeId, ofRectangle &rect);
+	float shapeSize;
+	enum ShapeID {
+		
+		SQUARE,
+		TRIANGLE,
+		HEXAGON,
+		CIRCLE,
+		NUM_SHAPES,
+		NO_SHAPE
+	};
 
-	vector<Icon*> icons;
+	class ShapeData {
+	public:
+		float birthday;
+		ShapeID type;
+		ShapeData(ShapeID type = TRIANGLE, float birthday = 0) {
+			this->birthday = birthday;
+			this->type = type;
+		}
+	};
+	
+	
+	void addShape(ShapeID name, ofVec2f pos);
+	
+		
+	map<ofxBox2dBaseShape*,ShapeData> data;
+	bool shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape);
+	void setColorForShape(ShapeID t);
+	
+	
+	vector<pair<ShapeID,ofRectangle> > triggers;
+
+	enum Hand {
+		LEFT_HAND,
+		RIGHT_HAND
+	};
+	
+	ShapeID handTouching[2];
+
+	
+	void handMoved(ofVec2f p, Hand hand);
+	void mouseMoved(int x, int y);
+	void drawFluffBall(ofVec2f p, float radius);
 };

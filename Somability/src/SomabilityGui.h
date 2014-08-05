@@ -15,11 +15,14 @@ public:
 	void toggle();
 
 	void draw();
-	void mouseMoved(ofMouseEventArgs &m);
-	void mousePressed(ofMouseEventArgs &m);
-	void mouseDragged(ofMouseEventArgs &m);
-	void mouseReleased(ofMouseEventArgs &m);
+	bool mouseMoved(ofMouseEventArgs &m);
+	bool mousePressed(ofMouseEventArgs &m);
+	bool mouseDragged(ofMouseEventArgs &m);
+	bool mouseReleased(ofMouseEventArgs &m);
 
+
+	void addSlider(string name, float &val, float min, float max);
+	void addMeter(string name, float &val, float min, float max);
 
 	xmlgui::SimpleGui gui;
 	bool enabled;

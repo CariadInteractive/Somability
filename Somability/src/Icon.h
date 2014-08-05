@@ -6,11 +6,12 @@
 
 class Icon: public ofRectangle {
 public:
-	Icon(string appName) {
+	Icon(string appName, int x, int y) {
 		this->appName = appName;
 		img.loadImage("img/icons/"+appName+".png");
 		this->width = img.getWidth();
 		this->height = img.getHeight();
+		setPosition(x, y);
 		down = false;
 		over = false;
 	}

@@ -1,5 +1,5 @@
 /*
- *  ChoiceState.h
+ *  BalanceState.h
  *
  *  based on GreenState.h Copyright (c) 2011, Neil Mendoza, http://www.neilmendoza.com
  *  All rights reserved. 
@@ -31,29 +31,60 @@
  */
 #pragma once
 
-#include "ofxState.h"
-#include "SharedData.h"
-#include "Icon.h"
 #include "SomabilityApp.h"
+#include "ofxOpenCv.h"
 
-class ChoiceState : public SomabilityApp
+class BalanceState : public SomabilityApp, public ofBaseSoundInput
 {
 public:
-	ChoiceState();
-	void setupGui(SomabilityGui *gui);
-
+	
+	
+	void setup();
 	void update();
 	void draw();
-	void mouseMoved(int x, int y, int button);
-	void mousePressed(int x, int y, int button);
-	void mouseDragged(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
-
 	string getName();
 	void stateEnter();
-	
-	
-	ofImage logo;
+	void stateExit();
+	void shoot();
+	void tryToFire();
+	ofSoundPlayer boing;
 
-	vector<Icon*> icons;
+	void setupGui(SomabilityGui *gui);
+
+	ofSoundStream soundStream;
+	void audioIn(float *samples, int length, int numChannels);
+	void keyPressed(int k);
+	float volume;
+	int audioFramesSinceLastFired;
+	int MIN_FRAMES_BETWEEN_FIRES;
+	bool mustFire;
+		
+	ofxCvGrayscaleImage greyImg;
+	ofxCvContourFinder contours;
+	vector<ofxBox2dEdge *> persons;
+	unsigned char *buff;
+	
+	float shootingAngle;
+	///////////////////////////////////////////////////////////////////////////////////////
+	// BOX2D stuff
+	
+	vector    <ofPtr<ofxBox2dBaseShape> >	shapes;		  //	default box2d circles
+	
+	
+	class ShapeData {
+	public:
+		float birthday;
+		
+		ShapeData(float birthday = 0) {
+			this->birthday = birthday;
+		}
+	};
+	
+	map<ofxBox2dBaseShape*,ShapeData> data;
+	bool shapeIsTooOld(float currTime, ofxBox2dBaseShape *shape);
+	//
+	///////////////////////////////////////////////////////////////////////////////////////
+	float MAX_SHAPE_AGE;
+	float sensitivity;
 };

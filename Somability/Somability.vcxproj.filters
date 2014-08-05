@@ -255,18 +255,6 @@
     <ClCompile Include="src\States\ChoiceState.cpp">
       <Filter>states</Filter>
     </ClCompile>
-    <ClCompile Include="src\States\CollectingState.cpp">
-      <Filter>states</Filter>
-    </ClCompile>
-    <ClCompile Include="src\States\RhythmState.cpp">
-      <Filter>states</Filter>
-    </ClCompile>
-    <ClCompile Include="src\States\StillnessState.cpp">
-      <Filter>states</Filter>
-    </ClCompile>
-    <ClCompile Include="src\States\TogethernessState.cpp">
-      <Filter>states</Filter>
-    </ClCompile>
     <ClCompile Include="src\States\Trail.cpp">
       <Filter>states</Filter>
     </ClCompile>
@@ -319,6 +307,15 @@
       <Filter>ofxXmlGui</Filter>
     </ClCompile>
     <ClCompile Include="src\SomabilityGui.cpp" />
+    <ClCompile Include="src\States\ReachState.cpp">
+      <Filter>states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\States\FlowState.cpp">
+      <Filter>states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\States\BalanceState.cpp">
+      <Filter>states</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\States\SharedData.h" />
@@ -878,21 +875,6 @@
     <ClInclude Include="src\States\ChoiceState.h">
       <Filter>states</Filter>
     </ClInclude>
-    <ClInclude Include="src\States\CollectingState.h">
-      <Filter>states</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\Ding.h">
-      <Filter>states</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\RhythmState.h">
-      <Filter>states</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\StillnessState.h">
-      <Filter>states</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\TogethernessState.h">
-      <Filter>states</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\video\tracking.hpp">
       <Filter>addons</Filter>
     </ClInclude>
@@ -1073,6 +1055,17 @@
       <Filter>ofxXmlGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SomabilityApp.h" />
+    <ClInclude Include="src\States\ReachState.h">
+      <Filter>states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\FlowState.h">
+      <Filter>states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\BalanceState.h">
+      <Filter>states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Icon.h" />
+    <ClInclude Include="src\SomabilityGui.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

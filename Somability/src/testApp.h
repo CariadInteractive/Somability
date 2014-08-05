@@ -6,9 +6,9 @@
 #include "SharedData.h"
 #include "ChoiceState.h"
 #include "RhythmState.h"
-#include "StillnessState.h"
-#include "TogethernessState.h"
-#include "CollectingState.h"
+#include "FlowState.h"
+#include "BalanceState.h"
+#include "ReachState.h"
 #include "Centerer.h"
 
 class testApp : public ofBaseApp{

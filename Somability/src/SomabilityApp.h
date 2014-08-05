@@ -7,8 +7,10 @@
 class SomabilityApp: public itg::ofxState<SharedData> {
 public:
 	virtual void setupGui(SomabilityGui *gui) {};
-	void stateEnter() {
+	virtual void stateEnter() {
 		ofSetWindowTitle(getName());
+		getSharedData().gui->gui.clear();
+		printf("BOGGIE!\n");
 		setupGui(getSharedData().gui);
 	}
 };

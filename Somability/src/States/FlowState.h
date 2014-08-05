@@ -1,5 +1,5 @@
 /*
- *  ChoiceState.h
+ *  FlowState.h
  *
  *  based on GreenState.h Copyright (c) 2011, Neil Mendoza, http://www.neilmendoza.com
  *  All rights reserved. 
@@ -31,29 +31,23 @@
  */
 #pragma once
 
-#include "ofxState.h"
-#include "SharedData.h"
-#include "Icon.h"
 #include "SomabilityApp.h"
+#include "Trail.h"
 
-class ChoiceState : public SomabilityApp
+class FlowState : public SomabilityApp
 {
 public:
-	ChoiceState();
-	void setupGui(SomabilityGui *gui);
-
 	void update();
 	void draw();
-	void mouseMoved(int x, int y, int button);
-	void mousePressed(int x, int y, int button);
-	void mouseDragged(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
-
+	void mouseMoved(int x, int y, int button);
 	string getName();
+	map<int,Trail> trails;
+	
 	void stateEnter();
+	void stateExit();
 	
 	
-	ofImage logo;
-
-	vector<Icon*> icons;
+	void userEvent(ofxOpenNIUserEvent & event);
+	
 };

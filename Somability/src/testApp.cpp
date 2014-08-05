@@ -48,10 +48,9 @@ void testApp::setup() {
 		
 	// initialise state machine
 	stateMachine.addState<ChoiceState>();
-	stateMachine.addState<RhythmState>();
-	stateMachine.addState<StillnessState>();
-	stateMachine.addState<TogethernessState>();
-    stateMachine.addState<CollectingState>();
+	stateMachine.addState<FlowState>();
+	stateMachine.addState<BalanceState>();
+    stateMachine.addState<ReachState>();
 	stateMachine.changeState("choice");
 	stateMachine.getSharedData().gui = &gui;
     stateMachine.getSharedData().theDisplayMode = MIRROR; //default to mirror mode
@@ -126,7 +125,6 @@ void testApp::drawKinectDebug(){
 	ofSetColor(0, 255, 0);
 	string msg = " MILLIS: " + ofToString(ofGetElapsedTimeMillis()) + " FPS: " + ofToString(ofGetFrameRate()) + " Device FPS: " + ofToString(stateMachine.getSharedData().openNIDevice.getFrameRate());
     
-//	stateMachine.getSharedData().font.drawString(msg, 20, stateMachine.getSharedData().openNIDevice.getNumDevices() * 480 - 20);
 
 }
 
@@ -134,7 +132,7 @@ void testApp::drawKinectDebug(){
 void testApp::draw(){
 //	ofSetColor(255);
 //	stateMachine.getSharedData().openNIDevice.drawMask();
-	ofBackground(0);
+	ofBackground(255);
 	centerer.begin();
 	stateMachine.draw();
 	gui.draw();
@@ -183,8 +181,9 @@ void testApp::mouseMoved(int x, int y ){
 	m.x = x;
 	m.y = y;
 	centerer.transformMouse(m);
-	stateMachine.onMouseMoved(m);
-	gui.mouseMoved(m);
+	if(gui.mouseMoved(m)) {
+		stateMachine.onMouseMoved(m);
+	}
 }
 
 //--------------------------------------------------------------
@@ -193,8 +192,10 @@ void testApp::mouseDragged(int x, int y, int button){
 	m.x = x;
 	m.y = y;
 	centerer.transformMouse(m);
-	stateMachine.onMouseDragged(m);
-	gui.mouseDragged(m);
+	if(!gui.mouseDragged(m)) {
+		stateMachine.onMouseDragged(m);
+	}
+	
 }
 
 //--------------------------------------------------------------
@@ -203,8 +204,9 @@ void testApp::mousePressed(int x, int y, int button){
 	m.x = x;
 	m.y = y;
 	centerer.transformMouse(m);
-	stateMachine.onMousePressed(m);
-	gui.mousePressed(m);
+	if(!gui.mousePressed(m)) {
+		stateMachine.onMousePressed(m);
+	}
 }
 
 //--------------------------------------------------------------
@@ -213,8 +215,10 @@ void testApp::mouseReleased(int x, int y, int button){
 	m.x = x;
 	m.y = y;
 	centerer.transformMouse(m);
-	stateMachine.onMouseReleased(m);
-	gui.mouseReleased(m);
+	if(!gui.mouseReleased(m)) {
+		stateMachine.onMouseReleased(m);
+	}
+	
 }
 
 //--------------------------------------------------------------

@@ -36,22 +36,34 @@ void SomabilityGui::draw() {
 	gui.draw();
 }
 
-void SomabilityGui::mouseMoved(ofMouseEventArgs &m) {
-	if(!enabled) return;
+bool SomabilityGui::mouseMoved(ofMouseEventArgs &m) {
+	if(!enabled) return false;
 	gui.touchOver(m.x, m.y, m.button);
+	return true;
 }
 
 
-void SomabilityGui::mousePressed(ofMouseEventArgs &m) {
-	if(!enabled) return;
+bool SomabilityGui::mousePressed(ofMouseEventArgs &m) {
+	if(!enabled) return false;
 	gui.touchDown(m.x, m.y, m.button);
+	return true;
 }
-void SomabilityGui::mouseDragged(ofMouseEventArgs &m) {
-	if(!enabled) return;
-	gui.touchMoved(m.x, m.y, m.button);
 
+bool SomabilityGui::mouseDragged(ofMouseEventArgs &m) {
+	if(!enabled) return false;
+	gui.touchMoved(m.x, m.y, m.button);
+	return true;
 }
-void SomabilityGui::mouseReleased(ofMouseEventArgs &m) {
-	if(!enabled) return;
+bool SomabilityGui::mouseReleased(ofMouseEventArgs &m) {
+	if(!enabled) return false;
 	gui.touchUp(m.x, m.y, m.button);
+	return true;
+}
+
+
+void SomabilityGui::addSlider(string name, float &val, float min, float max) {
+	gui.addSlider(name, val, min, max);
+}
+void SomabilityGui::addMeter(string name, float &val, float min, float max) {
+	gui.addMeter(name, val, min, max);
 }
