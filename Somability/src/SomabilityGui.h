@@ -25,7 +25,6 @@ public:
 	void addMeter(string name, float &val, float min, float max);
 
 	xmlgui::SimpleGui gui;
-	xmlgui::Control *lastControlAdded;
 	bool enabled;
 	ofImage banner;
 };

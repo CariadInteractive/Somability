@@ -5,7 +5,6 @@
 
 SomabilityGui::SomabilityGui() {
 	enabled = false;
-	lastControlAdded = NULL;
 	
 }
 void SomabilityGui::enable() {
@@ -72,14 +71,6 @@ bool SomabilityGui::mouseReleased(ofMouseEventArgs &m) {
 void SomabilityGui::addSlider(string name, float &val, float min, float max) {
 	xmlgui::Control *c = gui.addSlider(name, val, min, max);
 	c->size(400,40);
-	if(gui.getNumChildren()==0) {
-		c->x = 0;
-		c->y = 0;
-	} else if(lastControlAdded!=NULL) {
-		c->x = lastControlAdded->x;
-		c->y = lastControlAdded->y + lastControlAdded->height + 20;
-	}
-	lastControlAdded = c;
 }
 
 void SomabilityGui::addMeter(string name, float &val, float min, float max) {
