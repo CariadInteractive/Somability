@@ -45,14 +45,15 @@ void testApp::setup() {
 	stateMachine.getSharedData().box2d->createBounds(0,0,WIDTH, HEIGHT);
 	stateMachine.getSharedData().box2d->setFPS(30.0);
 	//stateMachine.getSharedData().box2d.registerGrabbing();
-		
+	stateMachine.getSharedData().gui = &gui;
+
 	// initialise state machine
 	stateMachine.addState<ChoiceState>();
 	stateMachine.addState<FlowState>();
 	stateMachine.addState<BalanceState>();
     stateMachine.addState<ReachState>();
 	stateMachine.changeState("choice");
-	stateMachine.getSharedData().gui = &gui;
+	
     stateMachine.getSharedData().theDisplayMode = MIRROR; //default to mirror mode
 	stateMachine.disableAppEvents();
 	stateMachine.disableMouseEvents();
