@@ -59,7 +59,8 @@ public:
 	int audioFramesSinceLastFired;
 	int MIN_FRAMES_BETWEEN_FIRES;
 	bool mustFire;
-		
+	ofImage gun;
+	ofImage circle;
 	ofxCvGrayscaleImage greyImg;
 	ofxCvContourFinder contours;
 	vector<ofxBox2dEdge *> persons;

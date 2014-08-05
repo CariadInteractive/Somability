@@ -31,7 +31,10 @@
  */
 #include "BalanceState.h"
 void BalanceState::setup() {
-
+	gun.loadImage("img/gun.png");
+	circle.loadImage("img/circle.png");
+	circle.setAnchorPercent(0.5, 0.5);
+	gun.setAnchorPercent(0.5, 0.5);
 	sensitivity = 50;
 	
 	if(ofFile("micSensitivity.txt").exists()) {
@@ -56,7 +59,7 @@ void BalanceState::setup() {
 void BalanceState::shoot() {
 	ofxBox2dCircle *c = new ofxBox2dCircle();
 	
-	float r = ofRandom(15, 25);
+	float r = ofRandom(23, 28);
 	c->setPhysics(3.0, 0.53, 0.1);
 	c->setup(getSharedData().box2d->getWorld(), WIDTH, HEIGHT/2, r);
 	ofVec2f v(-20,0);
@@ -167,7 +170,7 @@ void BalanceState::update()
 }
 void BalanceState::setupGui(SomabilityGui *gui) {
 	gui->addSlider("sensitivity", sensitivity, 0, 100);
-	gui->addMeter("meter", volume, 0, 1);
+//	gui->addSlider("meter", volume, 0, 1);
 }
 
 void BalanceState::draw()
@@ -187,10 +190,13 @@ void BalanceState::draw()
 
 	
 	ofFill();
-	ofSetColor(ofColor::red);
+	ofSetColor(ofColor::white);
 	
+
     for(int i=0; i<shapes.size(); i++) {
-		shapes[i].get()->draw();
+		ofxBox2dCircle *c = (ofxBox2dCircle*) shapes[i].get();
+		circle.draw(c->getPosition().x, c->getPosition().y, c->getRadius()*2, c->getRadius()*2);
+		//shapes[i].get()->draw();
 	}
 	
 	// draw the cannon
@@ -198,12 +204,12 @@ void BalanceState::draw()
 	ofTranslate(WIDTH,HEIGHT/2, 0);
 	ofRotate(ofRadToDeg(shootingAngle),0,0,1);
 	ofSetColor(255);
-	ofRect(30, -20, -100, 40);
+	gun.draw(0,0);
 	ofPopMatrix();
 	// contours.draw();
 
 	ofSetColor(255);
-	ofDrawBitmapString("Use the up and down arrow keys to change audio sensitivity ("+ofToString(sensitivity)+" / 100)", 5, 60);
+	//ofDrawBitmapString("Use the up and down arrow keys to change audio sensitivity ("+ofToString(sensitivity)+" / 100)", 5, 60);
 
 }
 

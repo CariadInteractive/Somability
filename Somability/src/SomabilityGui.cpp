@@ -5,8 +5,11 @@
 
 SomabilityGui::SomabilityGui() {
 	enabled = false;
+	lastControlAdded = NULL;
+	
 }
 void SomabilityGui::enable() {
+	
 	setEnabled(true);
 }
 
@@ -19,6 +22,9 @@ void SomabilityGui::toggle() {
 
 
 void SomabilityGui::setEnabled(bool enabled) {
+	if(!banner.isAllocated()) {
+		banner.loadImage("img/guiBanner.png");
+	}
 	if(enabled==this->enabled) {
 		return;
 	}
@@ -33,6 +39,8 @@ void SomabilityGui::draw() {
 	}
 	ofSetColor(0,0,0,150);
 	ofRect(0, 0, WIDTH, HEIGHT);
+	ofSetColor(255);
+	banner.draw(0,0);
 	gui.draw();
 }
 
@@ -62,8 +70,18 @@ bool SomabilityGui::mouseReleased(ofMouseEventArgs &m) {
 
 
 void SomabilityGui::addSlider(string name, float &val, float min, float max) {
-	gui.addSlider(name, val, min, max);
+	xmlgui::Control *c = gui.addSlider(name, val, min, max);
+	c->size(400,40);
+	if(gui.getNumChildren()==0) {
+		c->x = 0;
+		c->y = 0;
+	} else if(lastControlAdded!=NULL) {
+		c->x = lastControlAdded->x;
+		c->y = lastControlAdded->y + lastControlAdded->height + 20;
+	}
+	lastControlAdded = c;
 }
+
 void SomabilityGui::addMeter(string name, float &val, float min, float max) {
-	gui.addMeter(name, val, min, max);
+	gui.addMeter(name, val, min, max)->size(400, 40);
 }

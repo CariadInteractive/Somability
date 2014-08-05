@@ -64,7 +64,7 @@ void ReachState::update()
 	triggers.clear();
 	for(int i = 0; i < NUM_SHAPES; i++) {
 		
-		float xpos = ofMap(i, -1, NUM_SHAPES, 0, WIDTH);
+		float xpos = ofMap(i, -0.5, NUM_SHAPES-0.5, 0, WIDTH);
 //		ofLine(xpos, 0, xpos, 480);
 		ofRectangle r;
 		float w = shapeSize*WIDTH/7.f;

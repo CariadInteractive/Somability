@@ -10,7 +10,8 @@ public:
 	virtual void stateEnter() {
 		ofSetWindowTitle(getName());
 		getSharedData().gui->gui.clear();
-		printf("BOGGIE!\n");
+		getSharedData().gui->gui.setAutoLayout(false);
+		getSharedData().gui->gui.y = 100;
 		setupGui(getSharedData().gui);
 	}
 };
