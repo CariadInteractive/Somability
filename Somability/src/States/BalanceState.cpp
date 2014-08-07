@@ -169,8 +169,8 @@ void BalanceState::update()
 	
 }
 void BalanceState::setupGui(SomabilityGui *gui) {
-	gui->addSlider("sensitivity", sensitivity, 0, 100);
-//	gui->addSlider("meter", volume, 0, 1);
+	gui->addSlider("sensitivity", sensitivity, 0, 1);
+	gui->addSlider("volume", displayVolume, 0, 1);
 }
 
 void BalanceState::draw()
@@ -230,14 +230,13 @@ void BalanceState::tryToFire() {
 
 
 void BalanceState::audioIn(float *samples, int length, int numChannels) {
-	float threshold = (100-sensitivity)/100.f;
-	threshold *= threshold;
 
 	for(int i =0 ; i < length; i++) {
 		float f = ABS(samples[i]);
 		if(volume<f) volume = f;
-		else volume *= 0.999;
-		if(volume>threshold) {
+		else volume *= 0.9995;
+		displayVolume = sqrt(volume);
+		if(displayVolume>sensitivity) {
 			if(audioFramesSinceLastFired>MIN_FRAMES_BETWEEN_FIRES) {
 				tryToFire();
 				audioFramesSinceLastFired = 0;
@@ -261,8 +260,11 @@ void BalanceState::stateEnter() {
 }
 void BalanceState::stateExit() {
 
-
-	
+	map<ofxBox2dBaseShape*,ShapeData>::iterator it;
+	for(it = data.begin(); it != data.end(); it++) {
+		delete (*it).first;
+	}
+	data.clear();
 	//soundStream.stop();
 }
 

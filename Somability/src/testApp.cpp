@@ -57,8 +57,7 @@ void testApp::setup() {
     stateMachine.getSharedData().theDisplayMode = MIRROR; //default to mirror mode
 	stateMachine.disableAppEvents();
 	stateMachine.disableMouseEvents();
-	gui.gui.addTitle("hello");
-
+	ofSetFullscreen(true);
 }
 
 //--------------------------------------------------------------
@@ -136,8 +135,9 @@ void testApp::draw(){
 	ofBackground(255);
 	centerer.begin();
 	stateMachine.draw();
-	gui.draw();
+	
 	centerer.end();
+	gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -181,8 +181,9 @@ void testApp::mouseMoved(int x, int y ){
 	ofMouseEventArgs m;
 	m.x = x;
 	m.y = y;
-	centerer.transformMouse(m);
 	if(gui.mouseMoved(m)) {
+		centerer.transformMouse(m);
+	
 		stateMachine.onMouseMoved(m);
 	}
 }
@@ -192,8 +193,9 @@ void testApp::mouseDragged(int x, int y, int button){
     ofMouseEventArgs m;
 	m.x = x;
 	m.y = y;
-	centerer.transformMouse(m);
+	
 	if(!gui.mouseDragged(m)) {
+		centerer.transformMouse(m);
 		stateMachine.onMouseDragged(m);
 	}
 	
@@ -204,8 +206,9 @@ void testApp::mousePressed(int x, int y, int button){
     ofMouseEventArgs m;
 	m.x = x;
 	m.y = y;
-	centerer.transformMouse(m);
+	
 	if(!gui.mousePressed(m)) {
+		centerer.transformMouse(m);
 		stateMachine.onMousePressed(m);
 	}
 }
@@ -215,8 +218,9 @@ void testApp::mouseReleased(int x, int y, int button){
     ofMouseEventArgs m;
 	m.x = x;
 	m.y = y;
-	centerer.transformMouse(m);
+	
 	if(!gui.mouseReleased(m)) {
+		centerer.transformMouse(m);
 		stateMachine.onMouseReleased(m);
 	}
 	

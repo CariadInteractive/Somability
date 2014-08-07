@@ -61,7 +61,7 @@ void ofxOpenNI::setup() {
 	r = kinect->initDepthStream(640, 480, true, false);
 	if(!r) ofLogError() << "Couldn't init depth stream!";
 
-	r = kinect->initColorStream(640, 480, true);
+	r = kinect->initColorStream(640, 480, false);
 	if(!r) ofLogError() << "Couldn't init color stream!";
 
 	r = kinect->initSkeletonStream(false);

@@ -10,9 +10,10 @@ public:
 	virtual void stateEnter() {
 		ofSetWindowTitle(getName());
 		getSharedData().gui->gui.clear();
-		getSharedData().gui->gui.setAutoLayout(false);
-		getSharedData().gui->gui.y = 100;
+		getSharedData().gui->gui.setAutoSave(true);
+		
 		setupGui(getSharedData().gui);
+		getSharedData().gui->gui.loadSettings(getName() + ".xml");
 	}
 };
 

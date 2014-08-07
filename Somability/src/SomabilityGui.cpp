@@ -36,6 +36,8 @@ void SomabilityGui::draw() {
 	if(!enabled) {
 		return;
 	}
+	gui.x = 20;
+	gui.y = 80;
 	ofSetColor(0,0,0,150);
 	ofRect(0, 0, WIDTH, HEIGHT);
 	ofSetColor(255);
@@ -69,10 +71,12 @@ bool SomabilityGui::mouseReleased(ofMouseEventArgs &m) {
 
 
 void SomabilityGui::addSlider(string name, float &val, float min, float max) {
-	xmlgui::Control *c = gui.addSlider(name, val, min, max);
+	xmlgui::Slider *c = (xmlgui::Slider*)gui.addSlider(name, val, min, max);
 	c->size(400,40);
+	c->showValue = false;
 }
 
 void SomabilityGui::addMeter(string name, float &val, float min, float max) {
-	gui.addMeter(name, val, min, max)->size(400, 40);
+	xmlgui::Meter *c = (xmlgui::Meter*)gui.addMeter(name, val, min, max);
+	c->size(400,40);
 }

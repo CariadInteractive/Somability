@@ -191,7 +191,7 @@ void ReachState::drawShape(int shapeId, ofRectangle &rect) {
 			case SQUARE:{
 				ofRectangle r = rect;
 				ofPoint p = r.getCenter();
-				r.setFromCenter(p, r.width * 0.8, r.height * 0.8);
+				r.setFromCenter(p, r.width, r.height);
 				ofRect(r);
 				break;}
 			case TRIANGLE:

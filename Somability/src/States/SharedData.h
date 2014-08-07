@@ -101,6 +101,7 @@ public:
     }
 
     void drawSilhouetteDisplayMode(){
+		ofBackground(0);
 		// get number of current users
         int numUsers = openNIDevice.getNumTrackedUsers();
 
@@ -120,6 +121,7 @@ public:
 
     void drawInvisibleDisplayMode(){
         //nothing as yet... (-;
+		ofBackground(0);
         ofDrawBitmapStringHighlight("Invisible Display Mode (4 / 4)", 10, HEIGHT-10);
     }
 };
