@@ -43,6 +43,17 @@ void ReachState::setup() {
 	handTouching[RIGHT_HAND] = NO_SHAPE;
 	shapeSize = 1;
 	
+
+	shapeImages[CIRCLE].loadImage("img/circle.png");
+	shapeImages[SQUARE].loadImage("img/square.png");
+	shapeImages[HEXAGON].loadImage("img/hexagon.png");
+	shapeImages[TRIANGLE].loadImage("img/triangle.png");
+	
+	map<ShapeID, ofImage>::iterator it;
+	
+	for(it = shapeImages.begin(); it != shapeImages.end(); it++) {
+		(*it).second.setAnchorPercent(0.5, 0.5);
+	}
 }
 
 void ReachState::setupGui(SomabilityGui *gui) {
@@ -116,13 +127,13 @@ void ReachState::update()
 
 void ReachState::setColorForShape(ShapeID t) {
 	if(t==CIRCLE) {
-		ofSetColor(255, 0, 0);
+		ofSetHexColor(0xeb9f24);
 	} else if(t==HEXAGON) {
-		ofSetColor(0, 255, 0);
+		ofSetHexColor(0x35c3f2);
 	} else if(t==TRIANGLE) {
-		ofSetColor(255, 255, 0);
+		ofSetHexColor(0xc6d92c);
 	} else if(t==SQUARE) {
-		ofSetColor(0, 0, 255);
+		ofSetHexColor(0xf085b6);
 	}
 }
 
@@ -179,14 +190,19 @@ void ReachState::draw()
 		}
 		
 		ofFill();
-		setColorForShape(triggers[i].first);
+		//setColorForShape(triggers[i].first);
 		drawShape(triggers[i].first, triggers[i].second);
 	}
 }
 void ReachState::drawShape(int shapeId, ofRectangle &rect) {
-	switch(shapeId) {
+	
+	shapeImages[(ShapeID)shapeId].draw(rect.getCenter().x, rect.getCenter().y, rect.width, rect.height);
+	
+	
+	/*switch(shapeId) {
 			case CIRCLE:
 				ofCircle(rect.getCenter(), rect.width/2);
+				
 				break;
 			case SQUARE:{
 				ofRectangle r = rect;
@@ -222,7 +238,7 @@ void ReachState::drawShape(int shapeId, ofRectangle &rect) {
 				ofPopMatrix();
 			}
 				break;
-		}
+		}*/
 }
 string ReachState::getName()
 {

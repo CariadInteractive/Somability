@@ -239,6 +239,7 @@ void BalanceState::audioIn(float *samples, int length, int numChannels) {
 		if(displayVolume>sensitivity) {
 			if(audioFramesSinceLastFired>MIN_FRAMES_BETWEEN_FIRES) {
 				tryToFire();
+				
 				audioFramesSinceLastFired = 0;
 			}
 		}

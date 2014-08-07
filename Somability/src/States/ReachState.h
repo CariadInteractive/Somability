@@ -56,6 +56,8 @@ public:
 		NUM_SHAPES,
 		NO_SHAPE
 	};
+	
+	map<ShapeID, ofImage> shapeImages;
 
 	class ShapeData {
 	public:
