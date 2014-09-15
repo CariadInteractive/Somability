@@ -46,17 +46,21 @@ void testApp::setup() {
 	stateMachine.getSharedData().box2d->setFPS(30.0);
 	//stateMachine.getSharedData().box2d.registerGrabbing();
 	stateMachine.getSharedData().gui = &gui;
-
+	
 	// initialise state machine
 	stateMachine.addState<ChoiceState>();
+	printf("kkkk\n");
 	stateMachine.addState<FlowState>();
+		printf("4444\n");
 	stateMachine.addState<BalanceState>();
+		printf("5555\n");
     stateMachine.addState<ReachState>();
 	stateMachine.changeState("choice");
-	
+	printf("5132");
     stateMachine.getSharedData().theDisplayMode = MIRROR; //default to mirror mode
 	stateMachine.disableAppEvents();
 	stateMachine.disableMouseEvents();
+	printf("12345");
 	ofSetFullscreen(true);
 }
 

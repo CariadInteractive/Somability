@@ -140,7 +140,7 @@ void ofxOpenNI::drawSkeletons(float x, float y, float w, float h) {
 			SkeletonBone bone	= it->second;
 
 			ofSetColor(255, 255, 255);
-			ofSetLineWidth(3.0); // fat lines
+			ofSetLineWidth(8.0); // fat lines
 			int startJoint = bone.getStartJoint();
 			// do we have a start joint?
 			if ( kinect->getSkeletons()[i].find( ( NUI_SKELETON_POSITION_INDEX ) startJoint ) != kinect->getSkeletons()[i].end() ) 
